@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div style="color: red;">首页</div>
 </template>
 
 <script type="text/ecmascript-6">
