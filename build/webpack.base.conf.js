@@ -39,6 +39,7 @@ module.exports = {
       'login': resolve('src/components/login'),
       'site': resolve('src/components/site'),
       'ucenter': resolve('src/components/ucenter'),
+      'header': resolve('src/components/header'),
     }
   },
   module: {

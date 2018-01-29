@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import fastclick from 'fastclick'
 import '@/common/stylus/index.styl'
+import '@/common/js/reset.js'
 
 import { Swipe, SwipeItem, Indicator, Lazyload, MessageBox } from 'mint-ui'
 import 'mint-ui/lib/style.css'

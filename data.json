@@ -1,0 +1,19 @@
+{
+	"banner": [
+		{
+			"id":"1",
+			"image" : "https://m.tuniucdn.com/fb2/t1/G1/M00/37/C8/Cii9EVkvxQqIAXvoAEihq-CSGQEAALPLwAAAAAASKHD802_w640_h320_c1_t0.jpg",
+			"url" : "www.baidu.com"
+		},
+		{
+			"id":"2",
+			"image" : "https://m.tuniucdn.com/filebroker/cdn/snc/ef/e8/efe83136961f0f80874940af2747b56c_w640_h320_c1_t0.jpg",
+			"url" : "www.baidu.com"
+		},
+		{
+			"id":"3",
+			"image" : "https://m.tuniucdn.com/fb2/t1/G1/M00/BD/FB/Cii9EFadny2II5nTACnF0e6LVpoAABhgQEAoEkAKcXp126_w640_h320_c1_t0.jpg",
+			"url" : "www.baidu.com"
+		}
+	]
+}
