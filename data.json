@@ -15,5 +15,19 @@
 			"image" : "https://m.tuniucdn.com/fb2/t1/G1/M00/BD/FB/Cii9EFadny2II5nTACnF0e6LVpoAABhgQEAoEkAKcXp126_w640_h320_c1_t0.jpg",
 			"url" : "www.baidu.com"
 		}
+	],
+	"news": [
+		{
+			"id":"1",
+			"title" : "1主角是一只可爱的小青蛙,你可以给它取名字"
+		},
+		{
+			"id":"2",
+			"title" : "2主角是一只可爱的小青蛙,你可以给它取名字"
+		},
+		{
+			"id":"3",
+			"title" : "3主角是一只可爱的小青蛙,你可以给它取名字"
+		}
 	]
 }

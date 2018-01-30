@@ -8,12 +8,13 @@ import fastclick from 'fastclick'
 import '@/common/stylus/index.styl'
 import '@/common/js/reset.js'
 
-import { Swipe, SwipeItem, Indicator, Lazyload, MessageBox } from 'mint-ui'
+import { Swipe, SwipeItem, Indicator, Lazyload, MessageBox, InfiniteScroll } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
 Vue.prototype.loading = Indicator
 Vue.prototype.$msg = MessageBox
+Vue.use(InfiniteScroll)
 Vue.use(Lazyload)
 
 // 引入http库

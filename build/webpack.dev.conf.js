@@ -14,6 +14,7 @@ const express = require('express')
 const app = express()
 var appData = require('../data.json') //加载本地数据文件
 var banner = appData.banner //获取对应的本地数据
+var news = appData.news //获取对应的本地数据
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -56,6 +57,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           code: 0,
           msg: 'success',
           data: banner
+        })
+      }),
+      app.get('/api/getHomeNews', (req, res) => {
+        res.json({
+          code: 0,
+          msg: 'success',
+          data: news
         })
       })
     }

@@ -6,7 +6,7 @@
     </div>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
 export default {
   props: ['headerTitle', 'back'],
   methods: {
