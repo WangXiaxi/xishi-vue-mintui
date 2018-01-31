@@ -10,7 +10,15 @@
   let recalc = (function refreshRem () {
     let clientWidth = docEl.getBoundingClientRect().width
     /* 8.55：小于320px不再缩小，11.2：大于420px不再放大 */
-    docEl.style.fontSize = Math.max(Math.min(20 * (clientWidth / docWidth), 11.2), 8.55) * 5 + 'px'
+    let curFont = Math.max(Math.min(20 * (clientWidth / docWidth), 11.2), 8.55) * 5
+    if (curFont >= 42.75 && curFont < 50) {
+      curFont = 42.75
+    } else if (curFont >= 50 && curFont < 55.2) {
+      curFont = 50
+    } else if (curFont >= 55.2) {
+      curFont = 55.2
+    }
+    docEl.style.fontSize = curFont + 'px'
     return refreshRem
   })()
   /* 添加倍屏标识，安卓倍屏为1 */

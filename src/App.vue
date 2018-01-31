@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
     <router-view/>
   </div>
 </template>
@@ -19,4 +19,6 @@ export default {
     width: 100%
     height: 100%
     position: relative
+  [v-cloak]
+    opacity: 0
 </style>

@@ -40,7 +40,8 @@ module.exports = {
       'site': resolve('src/components/site'),
       'ucenter': resolve('src/components/ucenter'),
       'header': resolve('src/components/header'),
-      'footer-nav': resolve('src/components/footer-nav')
+      'footer-nav': resolve('src/components/footer-nav'),
+      'base': resolve('src/base')
     }
   },
   module: {

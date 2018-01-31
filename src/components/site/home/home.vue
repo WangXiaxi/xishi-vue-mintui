@@ -7,194 +7,119 @@
         搜索
       </router-link>
     </div>
-    <div class="inner-box">
-      <!-- 轮播展示 -->
-      <div class="banner-swiper">
-        <mt-swipe :auto="5000" :speed="300" :prevent="false" :stopPropagation="true" v-show="banner.length>0">
-          <mt-swipe-item v-for="(item, index) in banner" :key="index">
-            <router-link tag="div" to="item.url">
-             <img :src="item.image" style="width: 100%; height: auto">
+    <scroll class="inner-box" ref="homeBox">
+      <div>
+        <!-- 轮播展示 -->
+        <div class="banner-swiper" v-show="banner.length>0">
+          <mt-swipe :auto="5000" :speed="600" :prevent="false" :stopPropagation="true">
+            <mt-swipe-item v-for="(item, index) in banner" :key="index">
+              <a class="banner-bg" :href="item.url" :style="bannerBg(item)">
+              </a>
+            </mt-swipe-item>
+          </mt-swipe>
+        </div>
+        <!-- 横向导航 -->
+        <div class="home-nav">
+          <router-link to="/">
+            <img src="http://icengke.cn/mobile/images/qiyeguanli@3x.png">
+            景点大全
+          </router-link>
+          <router-link to="/">
+            <img src="http://icengke.cn/mobile/images/eduonline.png">
+            园区美景
+          </router-link>
+          <router-link to="/">
+            <img src="http://icengke.cn/mobile/images/suzhi@3x.png">
+            游玩攻略
+          </router-link>
+          <router-link to="/">
+            <img src="http://icengke.cn/mobile/images/gengduo@2x.png">
+            集团简介
+          </router-link>
+        </div>
+        <!-- 新闻推荐 -->
+        <div class="home-news">
+          <div class="title">
+            <img src="./gongGao.png">
+            <span>最近新闻</span>
+          </div>
+          <div class="inner">
+            <ul class="sw-inner" :class="{'anim': animateNews}">
+              <router-link tag="li" v-for="(item) in news" :key="item.id" :to="addUrl('/news',item.id)">{{item.title}}</router-link>
+            </ul>
+          </div>
+          <router-link tag="div" to="/" class="more">更多</router-link>
+        </div>
+        <!-- 门票选择 -->
+        <div class="pub-floor">
+          <h2>门票·选择</h2>
+          <ul class="list">
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p class="t-l"><span>惠</span>东方文化园年卡门票</p>
+              <div class="price-box"><span class="price"><i>￥</i>300.00</span><span class="old-price"><i>￥</i>460.00</span></div>
             </router-link>
-          </mt-swipe-item>
-        </mt-swipe>
-      </div>
-      <!-- 横向导航 -->
-      <div class="home-nav">
-        <router-link to="/">
-          <img src="http://icengke.cn/mobile/images/qiyeguanli@3x.png">
-          景点大全
-        </router-link>
-        <router-link to="/">
-          <img src="http://icengke.cn/mobile/images/eduonline.png">
-          园区美景
-        </router-link>
-        <router-link to="/">
-          <img src="http://icengke.cn/mobile/images/suzhi@3x.png">
-          游玩攻略
-        </router-link>
-        <router-link to="/">
-          <img src="http://icengke.cn/mobile/images/gengduo@2x.png">
-          集团简介
-        </router-link>
-      </div>
-      <!-- 新闻推荐 -->
-      <div class="home-news">
-        <div class="title">
-          <img src="./gongGao.png">
-          <span>最近新闻</span>
-        </div>
-        <div class="inner">
-          <ul class="sw-inner" :class="{'anim': animateNews}">
-            <router-link tag="li" v-for="(item) in news" :key="item.id" :to="addUrl('/news',item.id)">{{item.title}}</router-link>
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p class="t-l"><span>惠</span>太虚湖酒店</p>
+              <div class="price-box"><span class="price"><i>￥</i>300.00</span><span class="old-price"><i>￥</i>460.00</span></div>
+            </router-link>
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p class="t-l">太极坛</p>
+              <div class="price-box"><span  class="price"><i>￥</i>460.00</span><span class="old-price"><i>￥</i>460.00</span></div>
+            </router-link>
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p class="t-l">观音显圣</p>
+              <div class="price-box"><span class="price"><i>￥</i>460.00</span><span class="old-price"><i>￥</i>460.00</span></div>
+            </router-link>
           </ul>
+          <div class="more-box">
+            <router-link class="more" to="/">
+              查看更多
+            </router-link>
+          </div>
         </div>
-        <router-link tag="div" to="/" class="more">更多</router-link>
+        <!-- 景点推荐 -->
+        <div class="pub-floor">
+          <h2>景点·推荐</h2>
+          <ul class="list">
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p>杨岐山寺庙</p>
+            </router-link>
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p>太虚湖酒店</p>
+            </router-link>
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p>太极坛</p>
+            </router-link>
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <p>观音显圣</p>
+            </router-link>
+          </ul>
+          <div class="more-box">
+            <router-link class="more" to="/">
+              查看更多
+            </router-link>
+          </div>
+        </div>
+        <!-- 玩法攻略 -->
+        <div class="home-strategy">
+          <!-- <ul class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+            <router-link tag="li" to="/">
+              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
+              <h2>杨岐山寺庙</h2>
+              <p>js是达到无缝滚动的效果 marquee的效果却不同，必须要前一次滚动完成之后，才会接着下一次！ 两次之间留下一段空白！ 没有什么费事不费事的问题，只是看你自己需要什么效果而已！</p>
+            </router-link>
+          </ul> -->
+        </div>
       </div>
-      <div style="color: red">
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/> <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/> <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-        1
-        <br/>
-      </div>
-    </div>
+    </scroll>
     <FooterNav></FooterNav>
   </div>
 </template>
@@ -204,11 +129,13 @@ import {getBanner, getHomeNews} from '@/api/api'
 import {ERR_OK} from '@/api/config'
 import {loadingMixin} from '@/common/js/mixin'
 import FooterNav from 'footer-nav/footer-nav'
+import Scroll from 'base/scroll/scroll'
 
 export default {
   mixins: [loadingMixin],
   components: {
-    FooterNav
+    FooterNav,
+    Scroll
   },
   data () {
     return {
@@ -217,12 +144,17 @@ export default {
       animateNews: false
     }
   },
+  computed: {
+  },
   created () {
     this._getAllData()
   },
   methods: {
     addUrl (urlText, itemId) {
       return `${urlText}/${itemId}`
+    },
+    bannerBg (item) {
+      return `background-image: url('${item.image}')`
     },
     _getAllData () {
       let _this = this
@@ -248,6 +180,9 @@ export default {
       let promise4 = Promise.all([promise1, promise2])
       promise4.then(() => {
         this.closeLoadingAct()
+        setTimeout(() => {
+          this.$refs.homeBox.refresh()
+        }, 20)
       })
     },
     _swNewsStart () {
@@ -257,13 +192,20 @@ export default {
         this.news.shift()
         this.animateNews = false
       }, 500)
+    },
+    loadMore () {
+      this.loading = true
+      setTimeout(() => {
+        let last = this.list[this.list.length - 1]
+        for (let i = 1; i <= 10; i++) {
+          this.list.push(last + i)
+        }
+        this.loading = false
+      }, 2500)
     }
   }
 }
 </script>
-
-<style lang="stylus" rel="stylesheet/stylus">
-</style>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~@/common/stylus/variable"
@@ -280,6 +222,7 @@ export default {
     box-orient: vertical
     -webkit-flex-direction: column
     flex-direction: column
+    position: relative
     .header
       position: fixed
       top: 0
@@ -292,7 +235,7 @@ export default {
         width: 100%
         height: 100%
         line-height: 30px
-        background-color: hsla(0,0%,100%,.8)
+        background-color: hsla(0, 0%, 100%, .8)
         border-radius: 17px
         font-size: .28rem
         padding-left: 10px
@@ -314,6 +257,12 @@ export default {
         width: 100%
         position: relative
         height: 3.24rem
+        .banner-bg
+          width: 100%
+          height: 100%
+          background: 50% 50% no-repeat
+          background-size: 100%
+          display: block
       .home-nav
         padding: 0.26rem 0.2rem
         display: -webkit-box
@@ -334,7 +283,8 @@ export default {
           -ms-flex: 1
           flex: 1
           text-align: center
-          font-size: 0.26rem
+          font-size: $font-size-medium
+          color: $color-highlight-background
           img
             display: block
             width: 56%
@@ -354,8 +304,8 @@ export default {
         -webkit-flex-direction: row
         flex-direction: row
         .title
-          line-height: 0.72rem
-          padding: 0 0.16rem 0 0.1rem
+          line-height: 0
+          padding: 0.36rem 0.16rem 0.36rem 0.1rem
           position: relative
           display: -webkit-box
           display: -webkit-flex
@@ -368,9 +318,9 @@ export default {
           flex-direction: row
           img
             display: block
-            width: 0.38rem
-            height: 0.38rem
-            margin-top: 0.17rem
+            width: 0.36rem
+            height: 0.36rem
+            margin-top: -0.18rem
             opacity: 0.7
             margin-right: 0.1rem
           span
@@ -390,8 +340,8 @@ export default {
             -webkit-transform: scaleX(.5)
             transform:scaleX(.5)
         .more
-          line-height: 0.72rem
-          padding: 0 0.25rem 0 0.25rem
+          line-height: 0
+          padding: 0.36rem 0.25rem
           position: relative
           color: $color-background-999
           font-size: $font-size-medium
@@ -416,11 +366,91 @@ export default {
           .sw-inner
             li
               height: 0.72rem
-              line-height: 0.72rem
+              line-height: 0
+              padding: 0.36rem 0
               color: $color-background-999
               font-size: $font-size-medium
               no-wrap()
             &.anim
               transition: all 0.5s
               margin-top: -0.72rem
+      .pub-floor
+        margin-top: 0.1rem
+        background-color: #fff
+        position: relative
+        h2
+          color: $color-highlight-background
+          font-size: $font-size-medium-x1
+          font-weight: 400
+          text-align: center
+          padding: 0.34rem 0 0.24rem
+        .more-box
+          text-align: center
+          font-size: 0
+          position: relative
+          &:after
+              line-scale()
+          .more
+            font-size: $font-size-small
+            padding: 0.3rem 0.2rem 0.3rem 0.4rem
+            display: inline-block
+            position: relative
+            padding-right: 0.45rem
+            &:before
+              border: 1px solid #c8c8cd
+              border-bottom-width: 0
+              border-left-width: 0
+              content: " "
+              top: 50%
+              right: 0.3rem
+              position: absolute
+              width: 0.1rem
+              height: 0.1rem
+              -webkit-transform: translateY(-50%) rotate(45deg)
+              transform: translateY(-50%) rotate(45deg)
+        .list
+          overflow: hidden
+          position: relative
+          li
+            width: 50%
+            float: left
+            padding: 0.1rem 0.2rem
+            img
+              width: 100%
+              height: 1.98rem
+            p
+              font-size: $font-size-medium-s
+              font-weight: 400
+              line-height: 1.6
+              margin-top: 0.04rem
+              text-align: center
+              no-wrap()
+              vertical-align: middle
+              span
+                display: inline-block
+                background: $color-hui
+                color: #fff
+                line-height: 0
+                font-size: $font-size-small
+                padding: 0.16rem 0.04rem
+                border-radius: 2px
+                vertical-align: middle
+                margin-right: 0.06rem
+              &.t-l
+                text-align: left
+            .price-box
+              margin-top: 0.06rem
+              .price
+                color: $color-price
+                font-size: $font-size-medium
+                i
+                  font-size: $font-size-small
+              .old-price
+                float: right
+                margin-top: 0.04rem
+                text-decoration:line-through
+      .home-strategy
+        width: 100%
+        position: relative
+        overflow: hidden
 </style>
