@@ -7,16 +7,16 @@ import axios from 'axios'
 import fastclick from 'fastclick'
 import '@/common/stylus/index.styl'
 import '@/common/js/reset.js'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 
-import { Swipe, SwipeItem, Indicator, Lazyload, MessageBox, InfiniteScroll } from 'mint-ui'
+import { Indicator, Lazyload, MessageBox, InfiniteScroll } from 'mint-ui'
 import 'mint-ui/lib/style.css'
-Vue.component(Swipe.name, Swipe)
-Vue.component(SwipeItem.name, SwipeItem)
 Vue.prototype.loading = Indicator
 Vue.prototype.$msg = MessageBox
 Vue.use(InfiniteScroll)
 Vue.use(Lazyload)
-
+require('swiper/dist/css/swiper.min.css')
+Vue.use(VueAwesomeSwiper)
 // 引入http库
 Vue.prototype.$axios = axios
 

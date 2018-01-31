@@ -20,7 +20,8 @@
     "axios": "^0.17.1",
     "vuex": "^3.0.1",
     "mint-ui": "^2.2.13",
-    "better-scroll": "^0.1.15"
+    "better-scroll": "^0.1.15",
+    "vue-awesome-swiper": "^2.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

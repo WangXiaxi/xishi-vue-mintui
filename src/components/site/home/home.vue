@@ -10,13 +10,14 @@
     <scroll class="inner-box" ref="homeBox">
       <div>
         <!-- 轮播展示 -->
-        <div class="banner-swiper" v-show="banner.length>0">
-          <mt-swipe :auto="5000" :speed="600" :prevent="false" :stopPropagation="true">
-            <mt-swipe-item v-for="(item, index) in banner" :key="index">
+        <div class="banner-swiper">
+          <swiper v-if="banner.length>0" :options="swiperOption" ref="mySwiper">
+            <swiper-slide v-for="(item, index) in banner" :key="index">
               <a class="banner-bg" :href="item.url" :style="bannerBg(item)">
               </a>
-            </mt-swipe-item>
-          </mt-swipe>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
         </div>
         <!-- 横向导航 -->
         <div class="home-nav">
@@ -130,18 +131,34 @@ import {ERR_OK} from '@/api/config'
 import {loadingMixin} from '@/common/js/mixin'
 import FooterNav from 'footer-nav/footer-nav'
 import Scroll from 'base/scroll/scroll'
+import {swiper, swiperSlide} from 'vue-awesome-swiper'
 
 export default {
   mixins: [loadingMixin],
   components: {
     FooterNav,
+    swiper,
+    swiperSlide,
     Scroll
   },
   data () {
     return {
       banner: [],
       news: [],
-      animateNews: false
+      animateNews: false,
+      swiperOption: {
+      // 是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
+        notNextTick: true,
+        loop: true,
+        speed: 600,
+        pagination: '.swiper-pagination',
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        paginationClickable: true,
+        autoplay: 3000,
+        autoHeight: true,
+        autoplayDisableOnInteraction: false
+      }
     }
   },
   computed: {
@@ -203,6 +220,16 @@ export default {
         this.loading = false
       }, 2500)
     }
+  },
+  deactivated () {
+    if (this.$refs.mySwiper) {
+      this.$refs.mySwiper.swiper.stopAutoplay()
+    }
+  },
+  activated () {
+    if (this.$refs.mySwiper) {
+      this.$refs.mySwiper.swiper.startAutoplay()
+    }
   }
 }
 </script>
@@ -256,10 +283,9 @@ export default {
       .banner-swiper
         width: 100%
         position: relative
-        height: 3.24rem
         .banner-bg
           width: 100%
-          height: 100%
+          height: 3.24rem
           background: 50% 50% no-repeat
           background-size: 100%
           display: block
