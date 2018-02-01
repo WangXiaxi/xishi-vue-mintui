@@ -1,9 +1,11 @@
 <template>
   <div id="app" v-cloak>
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <transition name="slide">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -22,6 +24,10 @@ export default {
     width: 100%
     height: 100%
     position: relative
+  .slide-enter-active,.slide-leave-active
+    transition: all 0.3s
+  .slide-enter,.slide-leave-to
+    opacity: 0
   [v-cloak]
     opacity: 0
 </style>

@@ -15,6 +15,9 @@ const app = express()
 var appData = require('../data.json') //加载本地数据文件
 var banner = appData.banner //获取对应的本地数据
 var news = appData.news //获取对应的本地数据
+var ticket = appData.ticket //获取对应的本地数据
+var scenicArea = appData.scenicArea //获取对应的本地数据
+var strategy = appData.strategy //获取对应的本地数据
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -64,6 +67,29 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           code: 0,
           msg: 'success',
           data: news
+        })
+      }),
+      app.get('/api/getTicket', (req, res) => {
+        res.json({
+          code: 0,
+          msg: 'success',
+          data: ticket
+        })
+      }),
+      app.get('/api/getScenicArea', (req, res) => {
+        res.json({
+          code: 0,
+          msg: 'success',
+          data: scenicArea
+        })
+      }),
+      app.get('/api/getStrategy', (req, res) => {
+        var page = req.query.page - 1,
+            limit = req.query.limit;
+        res.json({
+          code: 0,
+          msg: 'success',
+          data: strategy.slice(page*limit, (page+1)*limit)
         })
       })
     }

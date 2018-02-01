@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <LoadFull v-if="currentShow"></LoadFull>
     <div class="header">
       <router-link class="input" tag="div" to="/">
         <i class="mintui mintui-search">
@@ -7,7 +8,7 @@
         搜索
       </router-link>
     </div>
-    <scroll class="inner-box" ref="homeBox">
+    <scroll class="inner-box" :class="{'opacity':currentShow}" :data="strategyList" :pullup="pullup" :beforeScroll="beforeScroll" @scrollToEnd="loadMore" ref="homeBox">
       <div>
         <!-- 轮播展示 -->
         <div class="banner-swiper">
@@ -39,42 +40,31 @@
           </router-link>
         </div>
         <!-- 新闻推荐 -->
-        <div class="home-news">
+        <div class="home-news" v-if="news.length>0">
           <div class="title">
             <img src="./gongGao.png">
             <span>最近新闻</span>
           </div>
           <div class="inner">
             <ul class="sw-inner" :class="{'anim': animateNews}">
-              <router-link tag="li" v-for="(item) in news" :key="item.id" :to="addUrl('/news',item.id)">{{item.title}}</router-link>
+              <router-link tag="li" v-for="(item, index) in news" :key="index" :to="addUrl('/news',item.id)">{{item.title}}</router-link>
             </ul>
           </div>
           <router-link tag="div" to="/" class="more">更多</router-link>
         </div>
         <!-- 门票选择 -->
-        <div class="pub-floor">
+        <div class="pub-floor" v-if="ticket.length>0">
           <h2>门票·选择</h2>
           <ul class="list">
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p class="t-l"><span>惠</span>东方文化园年卡门票</p>
-              <div class="price-box"><span class="price"><i>￥</i>300.00</span><span class="old-price"><i>￥</i>460.00</span></div>
-            </router-link>
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p class="t-l"><span>惠</span>太虚湖酒店</p>
-              <div class="price-box"><span class="price"><i>￥</i>300.00</span><span class="old-price"><i>￥</i>460.00</span></div>
-            </router-link>
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p class="t-l">太极坛</p>
-              <div class="price-box"><span  class="price"><i>￥</i>460.00</span><span class="old-price"><i>￥</i>460.00</span></div>
-            </router-link>
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p class="t-l">观音显圣</p>
-              <div class="price-box"><span class="price"><i>￥</i>460.00</span><span class="old-price"><i>￥</i>460.00</span></div>
-            </router-link>
+            <transition-group name="opacity">
+              <router-link tag="li" to="/" v-for="(item, index) in ticket" :key="index">
+                <img v-lazy="item.img">
+                <p class="t-l">
+                  <span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)">惠</span><span>{{item.name}}</span>
+                </p>
+                <div class="price-box"><span class="price"><i>￥</i>{{item.sell_price}}</span><span class="old-price"><i>￥</i>{{item.market_price}}</span></div>
+              </router-link>
+            </transition-group>
           </ul>
           <div class="more-box">
             <router-link class="more" to="/">
@@ -83,25 +73,15 @@
           </div>
         </div>
         <!-- 景点推荐 -->
-        <div class="pub-floor">
+        <div class="pub-floor" v-if="scenicArea.length>0">
           <h2>景点·推荐</h2>
           <ul class="list">
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p>杨岐山寺庙</p>
-            </router-link>
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p>太虚湖酒店</p>
-            </router-link>
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p>太极坛</p>
-            </router-link>
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <p>观音显圣</p>
-            </router-link>
+            <transition-group name="opacity">
+              <router-link tag="li" to="/" v-for="(item, index) in scenicArea" :key="index">
+                <img v-lazy="item.img">
+                <p>{{item.name}}</p>
+              </router-link>
+            </transition-group>
           </ul>
           <div class="more-box">
             <router-link class="more" to="/">
@@ -110,14 +90,23 @@
           </div>
         </div>
         <!-- 玩法攻略 -->
-        <div class="home-strategy">
-          <!-- <ul class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <router-link tag="li" to="/">
-              <img src="https://p1.meituan.net/400.0/poi/b6b19ba00b2a4e37ee054496f495e567485586.png">
-              <h2>杨岐山寺庙</h2>
-              <p>js是达到无缝滚动的效果 marquee的效果却不同，必须要前一次滚动完成之后，才会接着下一次！ 两次之间留下一段空白！ 没有什么费事不费事的问题，只是看你自己需要什么效果而已！</p>
-            </router-link>
-          </ul> -->
+        <div class="home-strategy" v-if="strategyList.length>0">
+          <h2 class="big-tit">游玩·攻略</h2>
+          <ul class="list">
+            <transition-group name="opacity">
+              <router-link tag="li" to="/" v-for="(item, index) in strategyList" :key="index">
+                <div class="img-box">
+                  <img :src="item.img">
+                </div>
+                <div class="text-box">
+                  <h2>{{item.name}}</h2>
+                  <p class="des">{{item.des}}</p>
+                  <span class="time">{{item.time}}</span>
+                </div>
+              </router-link>
+            </transition-group>
+          </ul>
+          <LoadScroll v-show="ifShowLoadScroll" :ifShowLoad="ifShowLoad" :title="loadScrollTitle"></LoadScroll>
         </div>
       </div>
     </scroll>
@@ -126,28 +115,33 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {getBanner, getHomeNews} from '@/api/api'
+import {getBanner, getHomeNews, getHomeTicket, getHomeScenicArea, getHomeStrategy} from '@/api/api'
 import {ERR_OK} from '@/api/config'
-import {loadingMixin} from '@/common/js/mixin'
 import FooterNav from 'footer-nav/footer-nav'
 import Scroll from 'base/scroll/scroll'
+import LoadScroll from 'base/load-scroll/load-scroll'
+import LoadFull from 'base/load-full/load-full'
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
 
 export default {
-  mixins: [loadingMixin],
   components: {
     FooterNav,
     swiper,
     swiperSlide,
-    Scroll
+    Scroll,
+    LoadScroll,
+    LoadFull
   },
   data () {
     return {
+      currentShow: true,
       banner: [],
       news: [],
+      ticket: [],
+      scenicArea: [],
+      strategyList: [],
       animateNews: false,
       swiperOption: {
-      // 是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
         notNextTick: true,
         loop: true,
         speed: 600,
@@ -158,7 +152,14 @@ export default {
         autoplay: 3000,
         autoHeight: true,
         autoplayDisableOnInteraction: false
-      }
+      },
+      pullup: true,
+      beforeScroll: true,
+      ifShowLoadScroll: true,
+      ifShowLoad: true, // 判断是否需要Loadscroll圆圈图标
+      loadScrollTitle: '数据加载中...',
+      page: 2,
+      hasMore: true
     }
   },
   computed: {
@@ -173,9 +174,9 @@ export default {
     bannerBg (item) {
       return `background-image: url('${item.image}')`
     },
-    _getAllData () {
+    _getAllData () { // 所有数据获取
       let _this = this
-      let promise1 = new Promise(function (resolve, reject) {
+      let promise1 = new Promise((resolve, reject) => {
         getBanner().then((res) => {
           if (res.code === ERR_OK) {
             _this.banner = res.data
@@ -183,7 +184,7 @@ export default {
           }
         })
       })
-      let promise2 = new Promise(function (resolve, reject) {
+      let promise2 = new Promise((resolve, reject) => {
         getHomeNews().then((res) => {
           if (res.code === ERR_OK) {
             _this.news = res.data
@@ -194,11 +195,40 @@ export default {
           }
         })
       })
-      let promise4 = Promise.all([promise1, promise2])
-      promise4.then(() => {
-        this.closeLoadingAct()
+      let promise3 = new Promise((resolve, reject) => {
+        getHomeTicket().then((res) => {
+          if (res.code === ERR_OK) {
+            _this.ticket = res.data
+            resolve(res.data)
+          }
+        })
+      })
+      let promise4 = new Promise((resolve, reject) => {
+        getHomeScenicArea().then((res) => {
+          if (res.code === ERR_OK) {
+            _this.scenicArea = res.data
+            resolve(res.data)
+          }
+        })
+      })
+      let promise5 = new Promise((resolve, reject) => {
+        getHomeStrategy(1).then((res) => {
+          if (res.code === ERR_OK) {
+            _this.strategyList = res.data
+            if (res.data.length < 5) {
+              this.loadScrollTitle = '没有更多数据了'
+              this.ifShowLoad = false
+              this.hasMore = false
+            }
+            resolve(res.data)
+          }
+        })
+      })
+      let promiseAll = Promise.all([promise1, promise2, promise3, promise4, promise5])
+      promiseAll.then(() => {
         setTimeout(() => {
           this.$refs.homeBox.refresh()
+          this.currentShow = false
         }, 20)
       })
     },
@@ -210,18 +240,27 @@ export default {
         this.animateNews = false
       }, 500)
     },
-    loadMore () {
-      this.loading = true
-      setTimeout(() => {
-        let last = this.list[this.list.length - 1]
-        for (let i = 1; i <= 10; i++) {
-          this.list.push(last + i)
+    loadMore () { // 数据上拉加载
+      if (!this.hasMore) return
+      this.hasMore = false
+      getHomeStrategy(this.page).then((res) => {
+        if (res.code === ERR_OK) {
+          setTimeout(() => {
+            if (res.data.length < 5) {
+              this.loadScrollTitle = '没有更多数据了'
+              this.ifShowLoad = false
+            } else {
+              this.hasMore = true
+            }
+            this.strategyList = this.strategyList.concat(res.data)
+            this.page++
+          }, 500)
         }
-        this.loading = false
-      }, 2500)
+      })
     }
   },
   deactivated () {
+    console.log('12')
     if (this.$refs.mySwiper) {
       this.$refs.mySwiper.swiper.stopAutoplay()
     }
@@ -237,17 +276,15 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
+  .opacity-enter-active,.opacity-leave-active
+    transition: all 0.3s
+  .opacity-enter,.opacity-leave-to
+    opacity: 0
   .home
     width: 100%
     height: 100%
-    display: -webkit-box
-    display: -webkit-flex
-    display: -ms-flexbox
     display: flex
-    -ms-flex-direction: column
-    -webkit-box-orient: vertical
     box-orient: vertical
-    -webkit-flex-direction: column
     flex-direction: column
     position: relative
     .header
@@ -278,8 +315,11 @@ export default {
       flex: 1
       margin-top: 0
       background-color: $color-background
-      overflow-y: scroll
-      -webkit-overflow-scrolling: touch
+      overflow-y: hidden
+      opacity: 1
+      transition: opacity 0.3s
+      &.opacity
+        opacity: 0
       .banner-swiper
         width: 100%
         position: relative
@@ -291,14 +331,8 @@ export default {
           display: block
       .home-nav
         padding: 0.26rem 0.2rem
-        display: -webkit-box
-        display: -webkit-flex
-        display: -ms-flexbox
         display: flex
-        -ms-flex-direction: row
-        -webkit-box-orient: horizontal
         box-orient: horizontal
-        -webkit-flex-direction: row
         flex-direction: row
         background-color: #fff
         a
@@ -320,27 +354,15 @@ export default {
         margin: 0.1rem 0.1rem 0
         background-color: #fff
         border-radius: 0.1rem
-        display: -webkit-box
-        display: -webkit-flex
-        display: -ms-flexbox
         display: flex
-        -ms-flex-direction: row
-        -webkit-box-orient: horizontal
         box-orient: horizontal
-        -webkit-flex-direction: row
         flex-direction: row
         .title
           line-height: 0
           padding: 0.36rem 0.16rem 0.36rem 0.1rem
           position: relative
-          display: -webkit-box
-          display: -webkit-flex
-          display: -ms-flexbox
           display: flex
-          -ms-flex-direction: row
-          -webkit-box-orient: horizontal
           box-orient: horizontal
-          -webkit-flex-direction: row
           flex-direction: row
           img
             display: block
@@ -453,15 +475,16 @@ export default {
               no-wrap()
               vertical-align: middle
               span
-                display: inline-block
-                background: $color-hui
-                color: #fff
-                line-height: 0
-                font-size: $font-size-small
-                padding: 0.16rem 0.04rem
-                border-radius: 2px
                 vertical-align: middle
-                margin-right: 0.06rem
+                &.tips
+                  display: inline-block
+                  background: $color-hui
+                  color: #fff
+                  line-height: 0
+                  font-size: $font-size-small-s
+                  padding: 0.14rem 0.036rem
+                  border-radius: 2px
+                  margin-right: 0.06rem
               &.t-l
                 text-align: left
             .price-box
@@ -479,4 +502,65 @@ export default {
         width: 100%
         position: relative
         overflow: hidden
+        margin-top: 0.1rem
+        background: #fff
+        .big-tit
+          color: $color-highlight-background
+          font-size: $font-size-medium-x1
+          font-weight: 400
+          text-align: center
+          padding: 0.34rem 0 0.24rem
+        .list
+          position: relative
+          margin-top: 0.1rem
+          &:after
+              line-scale()
+              width: calc(100% - 0.4rem)
+              left: 0.2rem
+              bottom: 0
+              top: auto
+          li
+            height: auto
+            overflow: hidden
+            display: flex
+            box-orient: horizontal
+            flex-direction: row
+            padding: 0.3rem 0.2rem
+            position: relative
+            &:after
+              line-scale()
+              width: calc(100% - 0.4rem)
+              left: 0.2rem
+            .img-box
+              width: 2.4rem
+              font-size: 0
+              display: flex
+              align-items: center
+              img
+                width: 100%
+            .text-box
+              position: relative
+              flex: 1
+              margin-left: 0.2rem
+              padding-bottom: 0.36rem
+              h2
+                font-weight: 400
+                font-size: $font-size-medium-s
+                line-height: 1.42
+              .des
+                line-height: 1.42
+                overflow: hidden
+                text-overflow: ellipsis
+                display: -webkit-box
+                -webkit-line-clamp: 3
+                -webkit-box-orient: vertical
+              .time
+                display: block
+                text-align: right
+                position: absolute
+                bottom: 0
+                left: 0
+                right: 0
+                height: 0.36rem
+                line-height: 0.36rem
 </style>
