@@ -96,7 +96,7 @@
             <transition-group name="opacity">
               <router-link tag="li" to="/" v-for="(item, index) in strategyList" :key="index">
                 <div class="img-box">
-                  <img :src="item.img">
+                  <img v-lazy="item.img">
                 </div>
                 <div class="text-box">
                   <h2>{{item.name}}</h2>
@@ -538,6 +538,7 @@ export default {
               align-items: center
               img
                 width: 100%
+                height: 1.5rem
             .text-box
               position: relative
               flex: 1
