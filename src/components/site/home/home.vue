@@ -287,8 +287,6 @@ export default {
     box-orient: vertical
     flex-direction: column
     position: relative
-    img
-      background-color: $color-background
     .header
       position: fixed
       top: 0
@@ -468,6 +466,7 @@ export default {
             img
               width: 100%
               height: 1.98rem
+              background-color: $color-background
             p
               font-size: $font-size-medium-s
               font-weight: 400
@@ -541,6 +540,7 @@ export default {
               img
                 width: 100%
                 height: 1.5rem
+                background-color: $color-background
             .text-box
               position: relative
               flex: 1
