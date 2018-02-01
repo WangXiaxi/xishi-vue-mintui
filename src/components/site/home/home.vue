@@ -287,6 +287,8 @@ export default {
     box-orient: vertical
     flex-direction: column
     position: relative
+    img
+      background-color: $color-background
     .header
       position: fixed
       top: 0
