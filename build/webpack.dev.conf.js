@@ -18,6 +18,7 @@ var news = appData.news //获取对应的本地数据
 var ticket = appData.ticket //获取对应的本地数据
 var scenicArea = appData.scenicArea //获取对应的本地数据
 var strategy = appData.strategy //获取对应的本地数据
+var ticketClass = appData.ticketClass //获取对应的本地数据
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -55,41 +56,61 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     },
     before (app) {
-      app.get('/api/getBanner', (req, res) => {
+      app.get('/api/getBanner', (req, res) => { // 首页轮播
         res.json({
           code: 0,
           msg: 'success',
           data: banner
         })
       }),
-      app.get('/api/getHomeNews', (req, res) => {
+      app.get('/api/getHomeNews', (req, res) => { // 新闻推荐
         res.json({
           code: 0,
           msg: 'success',
           data: news
         })
       }),
-      app.get('/api/getTicket', (req, res) => {
+      app.get('/api/getTicket', (req, res) => { // 门票
+        var page = req.query.page - 1,
+            limit = req.query.limit,
+            curClassId = req.query.curClassId,
+            arr = []
+            if(Number(curClassId) !== 0) {
+              ticket.forEach(function(item){
+                if (item.ticket_class.indexOf(Number(curClassId)) !== -1) {
+                  arr.push(item)
+                }
+              })
+            } else {
+              arr = ticket
+            }
         res.json({
           code: 0,
           msg: 'success',
-          data: ticket
+          data: arr.slice(page*limit, (page+1)*limit)
         })
       }),
-      app.get('/api/getScenicArea', (req, res) => {
+      app.get('/api/getScenicArea', (req, res) => { // 景点推荐
         res.json({
           code: 0,
           msg: 'success',
           data: scenicArea
         })
       }),
-      app.get('/api/getStrategy', (req, res) => {
+      app.get('/api/getStrategy', (req, res) => { // 游玩攻略
         var page = req.query.page - 1,
-            limit = req.query.limit;
+            limit = req.query.limit
         res.json({
           code: 0,
           msg: 'success',
           data: strategy.slice(page*limit, (page+1)*limit)
+        })
+      }),
+      app.get('/api/getTicketClass', (req, res) => { // 获取门票分类
+        res.json({
+          code: 0,
+          msg: 'success',
+          data: ticketClass
         })
       })
     }

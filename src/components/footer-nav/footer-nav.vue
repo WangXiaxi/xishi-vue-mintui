@@ -1,16 +1,16 @@
 <template>
   <ul class="footer-nav">
-    <router-link tag="li" to="/">
+    <router-link tag="li" to="/home">
       <i class="icon-nav icon-nav-1"></i>
       首页
     </router-link>
-    <router-link tag="li" to="/singer">
+    <router-link tag="li" to="/ticket">
       <i class="icon-nav icon-nav-2"></i>
       门票
     </router-link>
     <router-link tag="li" to="/singer">
       <i class="icon-nav icon-nav-3"></i>
-      攻略
+      购物车
     </router-link>
     <router-link tag="li" to="/singer">
       <i class="icon-nav icon-nav-4"></i>

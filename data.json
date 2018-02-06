@@ -38,7 +38,9 @@
 			"sell_price": "1200.00",
 			"market_price": "1300.00",
 			"img": "https://attach.bbs.miui.com/forum/201612/06/215902e8t42met0ug4ic40.png",
-			"content": ""
+			"conditions": ["随时可预订", "不可退"],
+			"content": "",
+			"ticket_class": [1]
 		},
 		{
 			"id":"2",
@@ -47,7 +49,9 @@
 			"sell_price": "1000.00",
 			"market_price": "1100.00",
 			"img": "https://p0.meituan.net/400.0/poi/70606524042d79f42890789fdccdc4f2369205.png",
-			"content": ""
+			"conditions": ["随时可预订"],
+			"content": "",
+			"ticket_class": [1, 2]
 		},
 		{
 			"id":"3",
@@ -56,7 +60,9 @@
 			"sell_price": "200.00",
 			"market_price": "300.00",
 			"img": "https://p1.meituan.net/400.0/poi/acd671da2b21063131b09967da4e837c341534.png",
-			"content": ""
+			"conditions": ["随时可预订", "标签而已"],
+			"content": "",
+			"ticket_class": [2, 3]
 		},
 		{
 			"id":"4",
@@ -65,7 +71,9 @@
 			"sell_price": "1200.00",
 			"market_price": "1300.00",
 			"img": "https://p1.meituan.net/400.0/poi/9469d502982601d78c0f5e4498b0c58d471088.png",
-			"content": "包含2张成人票，1张儿童票"
+			"conditions": ["写点注意事项", "标签而已"],
+			"content": "包含2张成人票，1张儿童票",
+			"ticket_class": [4]
 		},
 		{
 			"id":"5",
@@ -74,7 +82,9 @@
 			"sell_price": "100.00",
 			"market_price": "100.00",
 			"img": "https://p0.meituan.net/400.0/poi/ea3e3d1d8823bba24956460f932b84e1640368.png",
-			"content": "1张儿童票"
+			"conditions": ["写点注意事项", "标签而已", "不可退"],
+			"content": "1张儿童票",
+			"ticket_class": [1]
 		},
 		{
 			"id":"6",
@@ -83,7 +93,9 @@
 			"sell_price": "300.00",
 			"market_price": "300.00",
 			"img": "https://p1.meituan.net/400.0/poi/db8fc251dabe77c82a8246095ce52628389006.png",
-			"content": ""
+			"conditions": ["写点注意事项", "标签而已", "不可退", "提前20分钟入场"],
+			"content": "",
+			"ticket_class": [1, 2]
 		},
 		{
 			"id":"7",
@@ -92,7 +104,9 @@
 			"sell_price": "1300.00",
 			"market_price": "1300.00",
 			"img": "https://p0.meituan.net/400.0/travel/3965989cfd6223a17f41068452e26f8b466338.png",
-			"content": ""
+			"conditions": ["写点注意事项"],
+			"content": "",
+			"ticket_class": [1, 2, 3, 4]
 		},
 		{
 			"id":"8",
@@ -101,7 +115,9 @@
 			"sell_price": "1300.00",
 			"market_price": "1300.00",
 			"img": "https://p1.meituan.net/400.0/travel/3b937af6b4a672bee947025ab5105bb0252937.jpg",
-			"content": ""
+			"conditions": ["提前一小时预订"],
+			"content": "",
+			"ticket_class": [1, 4]
 		},
 		{
 			"id":"9",
@@ -110,7 +126,9 @@
 			"sell_price": "1300.00",
 			"market_price": "1300.00",
 			"img": "https://p0.meituan.net/400.0/travel/cae4a2e571b48f3e9155cffd0c74387e292338.jpg",
-			"content": ""
+			"conditions": ["提前一小时预订"],
+			"content": "",
+			"ticket_class": [4]
 		},
 		{
 			"id":"10",
@@ -119,7 +137,60 @@
 			"sell_price": "1300.00",
 			"market_price": "1300.00",
 			"img": "https://p0.meituan.net/400.0/poi/f0a5e31c8495ff6c42f79500a42d99db595209.png",
-			"content": ""
+			"conditions": ["提前一小时预订"],
+			"content": "",
+			"ticket_class": [1]
+		},
+		{
+			"id":"11",
+			"name" : "东方文化园年卡门票",
+			"good_no": "SD147572472241",
+			"sell_price": "1300.00",
+			"market_price": "1300.00",
+			"img": "https://p1.meituan.net/400.0/travel/3b937af6b4a672bee947025ab5105bb0252937.jpg",
+			"conditions": ["提前一小时预订"],
+			"content": "",
+			"ticket_class": [4]
+		},
+		{
+			"id":"12",
+			"name" : "东方文化园年卡门票",
+			"good_no": "SD147572472241",
+			"sell_price": "1300.00",
+			"market_price": "1300.00",
+			"img": "https://p0.meituan.net/400.0/travel/cae4a2e571b48f3e9155cffd0c74387e292338.jpg",
+			"conditions": ["提前一天预订"],
+			"content": "",
+			"ticket_class": [1, 4]
+		},
+		{
+			"id":"13",
+			"name" : "东方文化园年卡门票",
+			"good_no": "SD147572472241",
+			"sell_price": "1300.00",
+			"market_price": "1300.00",
+			"img": "https://p0.meituan.net/400.0/poi/f0a5e31c8495ff6c42f79500a42d99db595209.png",
+			"conditions": ["随时可预订"],
+			"content": "",
+			"ticket_class": [4]
+		}
+	],
+	"ticketClass": [
+		{
+			"id":"1",
+			"name" : "通票组合"
+		},
+		{
+			"id":"2",
+			"name" : "观音显圣"
+		},
+		{
+			"id":"3",
+			"name" : "西施舞蹈"
+		},
+		{
+			"id":"4",
+			"name" : "一期门票"
 		}
 	],
 	"scenicArea": [

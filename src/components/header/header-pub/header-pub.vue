@@ -1,6 +1,6 @@
 <template>
   <div class="pub-header">
-    <span class="extend-click header-icon header-left" @click="goBack()"></span>
+    <a class="page-back" @click="goBack"><i class="mintui mintui-back"></i></a>
     <div class="header-content">
       {{headerTitle}}
     </div>
@@ -8,14 +8,54 @@
 </template>
 <script type="text/ecmascript-6">
 export default {
-  props: ['headerTitle', 'back'],
+  props: {
+    'headerTitle': {
+      type: String,
+      default: '不存在页面'
+    },
+    'back': {
+      type: String,
+      default: 'no'
+    }
+  },
   methods: {
     goBack () {
-      // 坑
-      this.$router.go(-1)
+      if (this.back === 'no') {
+        this.$router.go(-1)
+      } else {
+        this.$router.push(this.back)
+      }
     }
   }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  @import "~@/common/stylus/variable"
+  @import "~@/common/stylus/mixin"
+  .pub-header
+    height: 0.8rem
+    background: #fff
+    position: relative
+    &:before
+      line-scale()
+      bottom: 0
+      top: auto
+    .page-back
+      display: block
+      top: 0
+      left: 0
+      position: absolute
+      width: 0.8rem
+      height: 0.8rem
+      text-align: center
+      display: flex
+      justify-content: center
+      align-items: center
+    .header-content
+      text-align: center
+      line-height: 0.8rem
+      font-size: $font-size-medium
+      letter-spacing: 1px
+      font-weight: 400
+      color: $color-highlight-background
 </style>

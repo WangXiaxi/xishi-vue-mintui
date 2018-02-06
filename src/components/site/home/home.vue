@@ -8,7 +8,7 @@
         搜索
       </router-link>
     </div>
-    <scroll class="inner-box" :class="{'opacity':currentShow}" :data="strategyList" :pullup="pullup" :beforeScroll="beforeScroll" @scrollToEnd="loadMore" ref="homeBox">
+    <scroll class="inner-box" :class="{'opacity':currentShow}" :data="strategyList" :pullup="pullup" @scrollToEnd="loadMore" ref="homeBox">
       <div>
         <!-- 轮播展示 -->
         <div class="banner-swiper">
@@ -62,12 +62,12 @@
                 <p class="t-l">
                   <span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)">惠</span><span>{{item.name}}</span>
                 </p>
-                <div class="price-box"><span class="price"><i>￥</i>{{item.sell_price}}</span><span class="old-price"><i>￥</i>{{item.market_price}}</span></div>
+                <div class="price-box"><span class="price"><i>￥</i>{{item.sell_price}}</span><span class="old-price" v-if="Number(item.sell_price)<Number(item.market_price)"><i>￥</i>{{item.market_price}}</span></div>
               </router-link>
             </transition-group>
           </ul>
           <div class="more-box">
-            <router-link class="more" to="/">
+            <router-link class="more" to="/ticket">
               查看更多
             </router-link>
           </div>
@@ -110,14 +110,12 @@
         </div>
       </div>
     </scroll>
-    <FooterNav></FooterNav>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import {getBanner, getHomeNews, getHomeTicket, getHomeScenicArea, getHomeStrategy} from '@/api/api'
 import {ERR_OK} from '@/api/config'
-import FooterNav from 'footer-nav/footer-nav'
 import Scroll from 'base/scroll/scroll'
 import LoadScroll from 'base/load-scroll/load-scroll'
 import LoadFull from 'base/load-full/load-full'
@@ -125,7 +123,6 @@ import {swiper, swiperSlide} from 'vue-awesome-swiper'
 
 export default {
   components: {
-    FooterNav,
     swiper,
     swiperSlide,
     Scroll,
@@ -140,8 +137,8 @@ export default {
       ticket: [],
       scenicArea: [],
       strategyList: [],
-      animateNews: false,
-      swiperOption: {
+      animateNews: false, // 新闻滚动
+      swiperOption: { // swiper 配置参数
         notNextTick: true,
         loop: true,
         speed: 600,
@@ -154,12 +151,11 @@ export default {
         autoplayDisableOnInteraction: false
       },
       pullup: true,
-      beforeScroll: true,
       ifShowLoadScroll: true,
       ifShowLoad: true, // 判断是否需要Loadscroll圆圈图标
       loadScrollTitle: '数据加载中...',
-      page: 2,
-      hasMore: true
+      page: 2, // 底部上拉加载页数
+      hasMore: true // 是否还需要上拉加载
     }
   },
   computed: {
@@ -229,7 +225,7 @@ export default {
         setTimeout(() => {
           this.$refs.homeBox.refresh()
           this.currentShow = false
-        }, 20)
+        }, 200)
       })
     },
     _swNewsStart () {
@@ -246,7 +242,7 @@ export default {
       getHomeStrategy(this.page).then((res) => {
         if (res.code === ERR_OK) {
           setTimeout(() => {
-            if (res.data.length < 5) {
+            if (res.data.length < 10) {
               this.loadScrollTitle = '没有更多数据了'
               this.ifShowLoad = false
             } else {
@@ -260,7 +256,6 @@ export default {
     }
   },
   deactivated () {
-    console.log('12')
     if (this.$refs.mySwiper) {
       this.$refs.mySwiper.swiper.stopAutoplay()
     }
@@ -291,27 +286,25 @@ export default {
       position: fixed
       top: 0
       width: 100%
-      height: 45px
-      padding: 8px .3rem
+      height: 0.9rem
+      padding: 0.12rem .3rem
       z-index: 1000
       max-width: $max-width
       .input
         width: 100%
         height: 100%
-        line-height: 30px
+        line-height: 0.66rem
         background-color: hsla(0, 0%, 100%, .8)
-        border-radius: 17px
+        border-radius: 0.32rem
         font-size: .28rem
-        padding-left: 10px
+        padding-left: 0.2rem
         color: $color-background-999
         vertical-align: middle
         .mintui
           vertical-align: middle
+          font-size: 0.32rem
     .inner-box
       position: relative
-      -webkit-box-flex: 1
-      -webkit-flex: 1
-      -ms-flex: 1
       flex: 1
       margin-top: 0
       background-color: $color-background
