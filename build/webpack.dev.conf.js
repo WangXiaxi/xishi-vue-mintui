@@ -75,15 +75,15 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             limit = req.query.limit,
             curClassId = req.query.curClassId,
             arr = []
-            if(Number(curClassId) !== 0) {
-              ticket.forEach(function(item){
-                if (item.ticket_class.indexOf(Number(curClassId)) !== -1) {
-                  arr.push(item)
-                }
-              })
-            } else {
-              arr = ticket
+        if(curClassId && Number(curClassId) !== 0) {
+          ticket.forEach(function(item){
+            if (item.ticket_class.indexOf(Number(curClassId)) !== -1) {
+              arr.push(item)
             }
+          })
+        } else {
+          arr = ticket
+        }
         res.json({
           code: 0,
           msg: 'success',

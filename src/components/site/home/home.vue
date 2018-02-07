@@ -264,6 +264,9 @@ export default {
     if (this.$refs.mySwiper) {
       this.$refs.mySwiper.swiper.startAutoplay()
     }
+    setTimeout(() => {
+      this.$refs.homeBox.refresh()
+    }, 20)
   }
 }
 </script>

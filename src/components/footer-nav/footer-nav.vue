@@ -8,11 +8,11 @@
       <i class="icon-nav icon-nav-2"></i>
       门票
     </router-link>
-    <router-link tag="li" to="/singer">
+    <router-link tag="li" to="/cart">
       <i class="icon-nav icon-nav-3"></i>
       购物车
     </router-link>
-    <router-link tag="li" to="/singer">
+    <router-link tag="li" to="/mine">
       <i class="icon-nav icon-nav-4"></i>
       我的
     </router-link>

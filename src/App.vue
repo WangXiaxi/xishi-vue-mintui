@@ -5,10 +5,12 @@
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive"></router-view>
         </keep-alive>
+      </transition>
+      <transition name="slide">
         <router-view v-if="!$route.meta.keepAlive"></router-view>
       </transition>
     </div>
-    <FooterNav></FooterNav>
+    <FooterNav v-show="FooterNavShow"></FooterNav>
   </div>
 </template>
 
@@ -18,6 +20,11 @@ export default {
   name: 'App',
   components: {
     FooterNav
+  },
+  computed: {
+    FooterNavShow () {
+      return this.$store.state.FooterNavShow
+    }
   },
   created () {
   },

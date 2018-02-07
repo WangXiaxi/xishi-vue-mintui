@@ -2,7 +2,7 @@
   <div class="ticket-box">
     <LoadFull v-if="currentShow"></LoadFull>
     <HeaderPub headerTitle="门票"></HeaderPub>
-    <div class="class-banner">
+    <div class="class-banner" :class="{'opacity':currentShow}">
       <swiper :options="swiperOption" v-if="ticketClass.length>0" ref="mySwiper">
         <swiper-slide class="cl-box" :class="{act:curClassId === 0}">
           <a @click="chooseTicket(0)">全部</a>
@@ -157,6 +157,11 @@ export default {
         }
       })
     }
+  },
+  activated () {
+    setTimeout(() => {
+      this.$refs.ticketBox.refresh()
+    }, 20)
   }
 }
 </script>
@@ -176,6 +181,8 @@ export default {
       line-height: 0.8rem
       background: #fff
       position: relative
+      &.opacity
+        opacity: 0
       &:before
         line-scale()
         bottom: 0
@@ -197,6 +204,7 @@ export default {
             background: red
             bottom: 0
             top: auto
+            transform-origin: center bottom
     .ticket
       flex: 1
       overflow: hidden
@@ -219,6 +227,9 @@ export default {
             height: 0
             background: #fff
             border-bottom: 1px dashed #dedede
+          &:last-child
+            &:before
+              border: none
           .img-box
             width: 2.4rem
             overflow: hidden

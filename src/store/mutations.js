@@ -1,27 +1,8 @@
-import * as types from './mutation-types'
-
-const matutaions = {
-  [types.SET_SINGER] (state, singer) {
-    state.singer = singer
+export default {
+  LOGIN (state, data) { // 设置当前用户信息
+    state.user = data
   },
-  [types.SET_SINGINFO] (state, singInfo) {
-    state.singInfo = singInfo
-  },
-  [types.SET_CURRENTINDEX] (state, currentIndex) {
-    state.currentIndex = currentIndex
-  },
-  [types.SET_PLAYLIST] (state, playList) {
-    state.playList = playList
-  },
-  [types.SET_FULLSCREEN] (state, flag) {
-    state.fullscreen = flag
-  },
-  [types.SET_PLAYING] (state, flag) {
-    state.playing = flag
-  },
-  [types.SET_FIRSTENTER] (state, flag) {
-    state.firstEnter = flag
+  SET_FOOTERNAVSHOW (state, flag) { // 脚部组件是否显示
+    state.FooterNavShow = flag
   }
 }
-
-export default matutaions

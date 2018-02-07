@@ -1,11 +1,6 @@
-const state = {
-  singer: {},
-  singInfo: {},
-  playing: false, // 是否播放
-  playList: [], // 播放列表 数组格式
-  currentIndex: -1,
-  fullscreen: false,
-  firstEnter: true
+export default {
+  // 控制tabBar显示隐藏
+  user: {},
+  // 控制tabBar显示隐藏
+  FooterNavShow: true
 }
-
-export default state
