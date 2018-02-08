@@ -4,6 +4,7 @@ import Home from 'site/home/home'
 import Ticket from 'site/ticket/ticket'
 import Mine from 'ucenter/mine/mine'
 import Cart from 'ucenter/cart/cart'
+import PersonalPro from 'ucenter/personal-pro/personal-pro'
 
 Vue.use(Router)
 
@@ -34,7 +35,7 @@ export default new Router({
       name: 'Mine',
       component: Mine,
       meta: {
-        keepAlive: true // 需要被缓存
+        keepAlive: false // 不需要被缓存
       }
     },
     {
@@ -43,6 +44,14 @@ export default new Router({
       component: Cart,
       meta: {
         keepAlive: false // 不需要被缓存
+      }
+    },
+    {
+      path: '/personal-pro',
+      name: 'PersonalPro',
+      component: PersonalPro,
+      meta: {
+        keepAlive: true // 不需要被缓存
       }
     }
   ]

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app" v-cloak :class="{paddbottom:FooterNavShow === true}">
     <div class="inner-box">
       <transition name="slide">
         <keep-alive>
@@ -37,13 +37,16 @@ export default {
   #app
     width: 100%
     height: 100%
-    display: flex
-    box-orient: vertical
-    flex-direction: column
     position: relative
+    &.paddbottom
+      padding-bottom:1.04rem
     .inner-box
-      flex: 1
-      overflow-y: hidden
+      width: 100%
+      height: 100%
+      overflow: hidden
+      .abx
+        width: 100%
+        height:100%
   .slide-enter-active
     transition: all 0.3s
   .slide-enter,.slide-leave-to

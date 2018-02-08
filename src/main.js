@@ -14,11 +14,10 @@ import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-import { Indicator, Lazyload, MessageBox, InfiniteScroll } from 'mint-ui'
+import { Indicator, Lazyload, MessageBox } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.prototype.loading = Indicator
 Vue.prototype.$msg = MessageBox
-Vue.use(InfiniteScroll)
 Vue.use(Lazyload)
 require('swiper/dist/css/swiper.min.css')
 Vue.use(VueAwesomeSwiper)

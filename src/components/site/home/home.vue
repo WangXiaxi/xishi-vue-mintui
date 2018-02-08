@@ -225,7 +225,7 @@ export default {
         setTimeout(() => {
           this.$refs.homeBox.refresh()
           this.currentShow = false
-        }, 200)
+        }, 20)
       })
     },
     _swNewsStart () {

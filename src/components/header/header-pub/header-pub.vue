@@ -33,7 +33,7 @@ export default {
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
   .pub-header
-    height: 0.8rem
+    height: 0.86rem
     background: #fff
     position: relative
     &:before
@@ -45,16 +45,16 @@ export default {
       top: 0
       left: 0
       position: absolute
-      width: 0.8rem
-      height: 0.8rem
+      width: 0.86rem
+      height: 0.86rem
       text-align: center
       display: flex
       justify-content: center
       align-items: center
     .header-content
       text-align: center
-      line-height: 0.8rem
-      font-size: $font-size-medium
+      line-height: 0.86rem
+      font-size: $font-size-medium-x1
       letter-spacing: 1px
       font-weight: 400
       color: $color-highlight-background

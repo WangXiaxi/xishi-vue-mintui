@@ -55,10 +55,11 @@ export default {
       text-align: center
       font-size: $font-size-small
       padding: 0.1rem
+      height: 1.04rem
       .icon-nav
         display: block
         width: 100%
-        padding: 20% 0
+        height: 0.6rem
         background: 50% 0 no-repeat
         background-size: auto 80%
         &.icon-nav-1

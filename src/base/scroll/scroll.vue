@@ -49,7 +49,8 @@ export default {
       }
       this.scroll = new BScroll(this.$refs.wrapper, {
         probeType: this.probeType,
-        click: this.click
+        click: this.click,
+        bounceTime: 600
       })
       if (this.listenScroll) {
         let me = this

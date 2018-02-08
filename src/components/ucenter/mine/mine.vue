@@ -2,7 +2,7 @@
   <Scroll class="mine-box" ref="mineBox">
     <div>
       <div class="mine-header">
-        <div class="top">
+        <router-link tag="div" to="/personal-pro" class="top">
           <div class="header-img">
             <img src="./header.png" onerror="./header.png">
           </div>
@@ -14,7 +14,7 @@
           </div>
           <div class="more">
           </div>
-        </div>
+        </router-link>
         <div class="bot">
           <div class="item">
             <span class="ico-bg point">
@@ -31,11 +31,55 @@
       </div>
       <div class="mine-order">
         <div class="tit-box">
-          <span class="tit">我的订单</span>
-          <span class="more"><span>查看全部订单</span><i></i></span>
+          <span class="tit">门票订单</span>
+          <span class="more"><span>查看全部</span></span>
+        </div>
+        <div class="order-nav">
+          <ul>
+            <li>
+              <i class="o-n-1"></i>
+              待付款
+            </li>
+            <li>
+              <i class="o-n-2"></i>
+              待出票
+            </li>
+            <li>
+              <i class="o-n-3"></i>
+              待使用
+            </li>
+            <li>
+              <i class="o-n-4"></i>
+              待评价
+            </li>
+          </ul>
         </div>
       </div>
       <div class="mine-more">
+        <ul>
+          <li>
+            <span class="i-fo">我的足迹</span>
+          </li>
+          <li>
+            <span class="i-location">地址管理</span>
+          </li>
+          <router-link tag="li" to="/personal-pro">
+            <span class="i-preson">资料修改</span>
+          </router-link>
+          <li>
+            <span class="i-passw">修改密码</span>
+          </li>
+          <li>
+            <span class="i-reg">意见反馈</span>
+          </li>
+        </ul>
+      </div>
+      <div class="mine-out">
+        退出登录
+      </div>
+      <div class="mine-zc">
+        <p>浙江依杭网络科技有限公司</p>
+        <p>提供技术支持</p>
       </div>
     </div>
   </Scroll>
@@ -59,10 +103,8 @@ export default {
   .mine-box
     width: 100%
     height: 100%
-    display: flex
-    box-orient: vertical
-    flex-direction: column
     position: relative
+    overflow: hidden
     .mine-header
       height: 3.8rem
       background: #FB5350 #F95352
@@ -153,11 +195,136 @@ export default {
             font-size: $font-size-medium
             background: 0 50% no-repeat
             background-size: 0.4rem
-            height: 0.6rem
+            height: 0.8rem
             line-height: 0
-            padding: 0.3rem 0 0.3rem 0.5rem
+            padding: 0.4rem 0 0.4rem 0.5rem
             &.fav
               background-image: url('./fav.png')
             &.point
               background-image: url('./point.png')
+    .mine-order
+      background: #fff
+      .tit-box
+        height: 1rem
+        padding-left: 0.2rem
+        position: relative
+        &:before
+          line-scale()
+          top: auto
+          bottom: 0
+          right: 0
+          left: auto
+          width: calc(100% - 0.2rem)
+        .tit
+          line-height: 1rem
+          font-size: $font-size-medium-x1
+        .more
+          float: right
+          line-height: 1rem
+          color: $color-background-999
+          padding-right: 0.4rem
+          margin-right: 0.2rem
+          position: relative
+          span
+            font-size: $font-size-medium
+            position: relative
+          &:before
+            border: 1px solid #dedede
+            border-bottom-width: 0
+            border-left-width: 0
+            content: " "
+            top: 49%
+            right: 0.2rem
+            position: absolute
+            width: 0.16rem
+            height: 0.16rem
+            -webkit-transform: translateY(-50%) rotate(45deg)
+            transform: translateY(-50%) rotate(45deg)
+      .order-nav
+        ul
+          display: flex
+          box-orient: horizontal
+          flex-direction: row
+          position: relative
+          padding-top: 0.2rem
+          li
+            flex: 1
+            text-align: center
+            font-size: $font-size-medium-s
+            padding-bottom: 0.3rem
+            i
+              display: block
+              height: 0.6rem
+              width: 0.6rem
+              margin: 0 auto 0.1rem
+              background-repeat: no-repeat
+              background-size: auto 0.5rem
+              background-image: url(./order.png)
+              &.o-n-1
+                background-position: -2.97rem 0
+              &.o-n-2
+                background-position: -1.18rem 0
+              &.o-n-3
+                background-position: -0.58rem 0
+              &.o-n-4
+                background-position: -1.76rem 0
+    .mine-more
+      background: #fff
+      margin-top: 0.2rem
+      ul
+        padding-left: 0.2rem
+        li
+          line-height: 1rem
+          position: relative
+          &:after
+            border: 1px solid #dedede
+            border-bottom-width: 0
+            border-left-width: 0
+            content: " "
+            top: 49%
+            right: 0.4rem
+            position: absolute
+            width: 0.16rem
+            height: 0.16rem
+            -webkit-transform: translateY(-50%) rotate(45deg)
+            transform: translateY(-50%) rotate(45deg)
+          &:before
+            line-scale()
+            top: auto
+            bottom: 0
+            right: 0
+            left: auto
+            width: calc(100%)
+          &:last-child
+            &:before
+              height: 0
+          span
+            font-size: $font-size-medium-x1
+            display: block
+            background: 0 50% no-repeat
+            background-size: auto 40%
+            padding-left: 0.5rem
+            &.i-fo
+              background-image: url('./i-fo.png')
+            &.i-preson
+              background-image: url('./i-preson.png')
+            &.i-reg
+              background-image: url('./i-reg.png')
+            &.i-passw
+              background-image: url('./i-passw.png')
+            &.i-location
+              background-image: url('./i-location.png')
+    .mine-out
+      line-height: 1rem
+      text-align: center
+      background: #fff
+      margin-top: 0.2rem
+      font-size: $font-size-medium-x1
+    .mine-zc
+      text-align: center
+      padding-bottom: 0.6rem
+      color: $color-background-999
+      font-size: $font-size-medium
+      line-height: 1.6
+      margin-top: 0.6rem
 </style>

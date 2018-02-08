@@ -107,7 +107,7 @@ export default {
         setTimeout(() => {
           this.$refs.ticketBox.refresh()
           this.currentShow = false
-        }, 200)
+        }, 20)
       })
     },
     chooseTicket (id) {
@@ -177,8 +177,8 @@ export default {
     position: relative
     .class-banner
       width: 100%
-      height: 0.8rem
-      line-height: 0.8rem
+      height: 0.86rem
+      line-height: 0.86rem
       background: #fff
       position: relative
       &.opacity
