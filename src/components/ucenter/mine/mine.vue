@@ -241,7 +241,10 @@ export default {
             -webkit-transform: translateY(-50%) rotate(45deg)
             transform: translateY(-50%) rotate(45deg)
       .order-nav
+        position: relative
+        width: 100%
         ul
+          width: 100%
           display: flex
           box-orient: horizontal
           flex-direction: row
