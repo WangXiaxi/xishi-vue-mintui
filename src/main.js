@@ -14,13 +14,14 @@ import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-import { Indicator, Lazyload, MessageBox } from 'mint-ui'
+import { Indicator, Lazyload, MessageBox, Field } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.prototype.loading = Indicator
 Vue.prototype.$msg = MessageBox
 Vue.use(Lazyload)
 require('swiper/dist/css/swiper.min.css')
 Vue.use(VueAwesomeSwiper)
+Vue.component(Field.name, Field)
 // 引入http库
 Vue.prototype.$axios = axios
 
@@ -28,7 +29,7 @@ Vue.prototype.$axios = axios
 router.beforeEach((to, from, next) => {
   NProgress.start()
   let path = to.path
-  if (path === '/' || path === '/home' || path === '/ticket' || path === '/mine' || path === '/cart') {
+  if (path === '/' || path === '/home' || path === '/ticket' || path === '/mine') {
     store.commit('SET_FOOTERNAVSHOW', true)
   } else {
     store.commit('SET_FOOTERNAVSHOW', false)

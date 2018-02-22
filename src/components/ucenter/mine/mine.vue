@@ -124,6 +124,7 @@ export default {
           img
             width: 1.64rem
             height: 1.64rem
+            border-radius: 50%
         .header-inner
           flex: 1
           // background: red

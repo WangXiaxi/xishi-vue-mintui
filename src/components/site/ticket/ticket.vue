@@ -15,20 +15,25 @@
     <Scroll class="ticket" :class="{'opacity':currentShow}" :data="ticket" :pullup="pullup" @scrollToEnd="loadMore" ref="ticketBox">
       <div>
         <ul class="ticket-list">
-          <li v-for="(item, index) in ticket" :key="index">
+          <router-link tag="li" :to="addUrl('/ticket-detail', item.id)" v-for="(item, index) in ticket" :key="index">
             <div class="img-box">
               <img v-lazy="item.img">
             </div>
             <div class="content-box">
-              <h2 class="tit"><span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)">惠</span><span>{{item.name}}</span></h2>
-              <p class="tips-ts"><a  v-for="(item, index) in item.conditions" :key="index">{{item}}</a></p>
+              <h2 class="tit">
+                <span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)">
+                  <i>惠</i>
+                </span>
+                <span class="t">{{item.name}}</span>
+              </h2>
+              <p class="tips-ts"><span  v-for="(item, index) in item.conditions" :key="index">{{item}}</span></p>
               <div class="price-box">
                 <span class="price"><i>￥</i>{{item.sell_price}}</span>
                 <span class="old-price" v-if="Number(item.sell_price)<Number(item.market_price)"><i>￥</i>{{item.market_price}}</span>
               </div>
               <div class="shopping"></div>
             </div>
-          </li>
+          </router-link>
         </ul>
         <LoadScroll v-show="ifShowLoadScroll" :ifShowLoad="ifShowLoad" :title="loadScrollTitle"></LoadScroll>
       </div>
@@ -75,6 +80,9 @@ export default {
     this._getAllData()
   },
   methods: {
+    addUrl (urlText, itemId) {
+      return `${urlText}/${itemId}`
+    },
     _getAllData () {
       let _this = this
       let promise1 = new Promise((resolve, reject) => {
@@ -250,23 +258,40 @@ export default {
               display: -webkit-box
               -webkit-line-clamp: 2
               -webkit-box-orient: vertical
+              font-size: 0
               span
                 vertical-align: middle
                 color: $color-dialog-background
                 font-weight: 400
-                font-size: $font-size-medium-s
+                &.t
+                  font-size: $font-size-medium-s
                 &.tips
                   display: inline-block
                   background: $color-hui
+                  width: 0.28rem
+                  height: 0.28rem
+                  overflow: hidden
                   color: #fff
                   line-height: 0
-                  font-size: $font-size-small-s
-                  padding: 0.14rem 0.036rem
                   border-radius: 2px
                   margin-right: 0.06rem
+                  i
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    width: 0.56rem
+                    height: 0.56rem
+                    font-size: 0.42rem
+                    color: #fff
+                    line-height: 1
+                    transform: scale(0.5)
+                    transform-origin: 0 0
+                    text-align: center
+                    font-style: normal
+                    vertical-align: middle
             .tips-ts
               margin-top: 0.2rem
-              a
+              span
                 display: inline-block
                 border: 0.5px solid rgb(62, 166, 249)
                 color: rgb(62, 166, 249)

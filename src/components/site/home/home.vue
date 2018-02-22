@@ -57,10 +57,10 @@
           <h2>门票·选择</h2>
           <ul class="list">
             <transition-group name="opacity">
-              <router-link tag="li" to="/" v-for="(item, index) in ticket" :key="index">
+              <router-link tag="li" :to="addUrl('/ticket-detail',item.id)" v-for="(item, index) in ticket" :key="index">
                 <img v-lazy="item.img">
                 <p class="t-l">
-                  <span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)">惠</span><span>{{item.name}}</span>
+                  <span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)"><i>惠</i></span><span class="tit">{{item.name}}</span>
                 </p>
                 <div class="price-box"><span class="price"><i>￥</i>{{item.sell_price}}</span><span class="old-price" v-if="Number(item.sell_price)<Number(item.market_price)"><i>￥</i>{{item.market_price}}</span></div>
               </router-link>
@@ -290,13 +290,13 @@ export default {
       top: 0
       width: 100%
       height: 0.9rem
-      padding: 0.12rem .3rem
+      padding: 0.11rem .3rem
       z-index: 1000
       max-width: $max-width
       .input
         width: 100%
         height: 100%
-        line-height: 0.66rem
+        line-height: 0.68rem
         background-color: hsla(0, 0%, 100%, .8)
         border-radius: 0.32rem
         font-size: .28rem
@@ -464,7 +464,7 @@ export default {
               height: 1.98rem
               background-color: $color-background
             p
-              font-size: $font-size-medium-s
+              font-size: $font-size-medium
               font-weight: 400
               line-height: 1.6
               margin-top: 0.04rem
@@ -473,17 +473,40 @@ export default {
               vertical-align: middle
               span
                 vertical-align: middle
+                font-size: $font-size-medium-s
+                line-height: 1.6
+                &.tit
+                  flex: 1
+                  overflow: hidden
                 &.tips
                   display: inline-block
                   background: $color-hui
+                  width: 0.28rem
+                  height: 0.28rem
+                  overflow: hidden
                   color: #fff
                   line-height: 0
-                  font-size: $font-size-small-s
-                  padding: 0.14rem 0.036rem
                   border-radius: 2px
                   margin-right: 0.06rem
+                  i
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    width: 0.56rem
+                    height: 0.56rem
+                    font-size: 0.42rem
+                    color: #fff
+                    line-height: 1
+                    transform: scale(0.5)
+                    transform-origin: 0 0
+                    text-align: center
+                    font-style: normal
+                    vertical-align: middle
               &.t-l
                 text-align: left
+                line-height: 0
+                display: flex
+                align-items: center
             .price-box
               margin-top: 0.06rem
               .price
@@ -544,7 +567,7 @@ export default {
               padding-bottom: 0.36rem
               h2
                 font-weight: 400
-                font-size: $font-size-medium-s
+                font-size: $font-size-medium
                 line-height: 1.42
               .des
                 line-height: 1.42
