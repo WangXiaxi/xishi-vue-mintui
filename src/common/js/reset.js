@@ -11,6 +11,11 @@
     let clientWidth = docEl.getBoundingClientRect().width
     /* 8.55：小于320px不再缩小，11.2：大于420px不再放大 */
     let curFont = Math.max(Math.min(20 * (clientWidth / docWidth), 11.2), 8.55) * 5
+    if (curFont > 42.75 && curFont <= 50) {
+      curFont = 50
+    } else if (curFont > 50) {
+      curFont = 55.2
+    }
     docEl.style.fontSize = curFont + 'px'
     return refreshRem
   })()

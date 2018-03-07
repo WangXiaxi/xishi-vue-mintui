@@ -24,9 +24,11 @@
 </template>
 <script type="text/ecmascript-6">
 import HeaderPub from 'header/header-pub/header-pub'
+import wx from 'weixin-js-sdk'
 export default {
   components: {
-    HeaderPub
+    HeaderPub,
+    wx
   },
   data () {
     return {
@@ -35,6 +37,9 @@ export default {
       phone: '',
       birthday: ''
     }
+  },
+  created () {
+    console.log(wx)
   },
   methods: {
 
@@ -45,15 +50,12 @@ export default {
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
   .personal-pro
-    width: 100%
-    height: 100%
     display: flex
     box-orient: vertical
     flex-direction: column
     position: relative
     .personal-pro-box
       flex: 1
-      overflow-y: scroll
       -webkit-overflow-scrolling: touch
       .page-field
         .page-part

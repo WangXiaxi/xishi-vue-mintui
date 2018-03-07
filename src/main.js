@@ -14,10 +14,11 @@ import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-import { Indicator, Lazyload, MessageBox, Field } from 'mint-ui'
+import { Indicator, InfiniteScroll, Lazyload, MessageBox, Field } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.prototype.loading = Indicator
 Vue.prototype.$msg = MessageBox
+Vue.use(InfiniteScroll)
 Vue.use(Lazyload)
 require('swiper/dist/css/swiper.min.css')
 Vue.use(VueAwesomeSwiper)
@@ -37,6 +38,8 @@ router.beforeEach((to, from, next) => {
   next()
 })
 router.afterEach((to, from) => {
+  document.body.scrollTop = 0 // 页面跳转之后设置scrolltop = 0
+  document.documentElement.scrollTop = 0 // 页面跳转之后设置scrolltop = 0
   // 路由跳转结束进度结束
   NProgress.done()
 })

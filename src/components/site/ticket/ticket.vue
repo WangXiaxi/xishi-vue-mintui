@@ -2,17 +2,21 @@
   <div class="ticket-box">
     <LoadFull v-if="currentShow"></LoadFull>
     <HeaderPub headerTitle="门票"></HeaderPub>
-    <div class="class-banner" :class="{'opacity':currentShow}">
-      <swiper :options="swiperOption" v-if="ticketClass.length>0" ref="mySwiper">
-        <swiper-slide class="cl-box" :class="{act:curClassId === 0}">
-          <a @click="chooseTicket(0)">全部</a>
-        </swiper-slide>
-        <swiper-slide class="cl-box" v-for="(item, index) in ticketClass" :class="{act:curClassId === item.id}" @click="chooseTicket(item.id)" :key="index">
-          <a @click="chooseTicket(item.id)">{{item.name}}</a>
-        </swiper-slide>
-      </swiper>
+    <div class="class-banner-box">
+      <div class="class-banner" :class="{'opacity':currentShow}">
+        <swiper :options="swiperOption" v-if="ticketClass.length>0" ref="mySwiper">
+          <swiper-slide class="cl-box" :class="{act:curClassId === 0}">
+            <a @click="chooseTicket(0)">全部</a>
+          </swiper-slide>
+          <swiper-slide class="cl-box" v-for="(item, index) in ticketClass" :class="{act:curClassId === item.id}" @click="chooseTicket(item.id)" :key="index">
+            <a @click="chooseTicket(item.id)">{{item.name}}</a>
+          </swiper-slide>
+        </swiper>
+      </div>
     </div>
-    <Scroll class="ticket" :class="{'opacity':currentShow}" :data="ticket" :pullup="pullup" @scrollToEnd="loadMore" ref="ticketBox">
+    <div class="ticket" :class="{'opacity':currentShow}" v-infinite-scroll="loadMore"
+                                                        infinite-scroll-disabled="hasMore"
+                                                        infinite-scroll-distance="10">
       <div>
         <ul class="ticket-list">
           <router-link tag="li" :to="addUrl('/ticket-detail', item.id)" v-for="(item, index) in ticket" :key="index">
@@ -37,12 +41,11 @@
         </ul>
         <LoadScroll v-show="ifShowLoadScroll" :ifShowLoad="ifShowLoad" :title="loadScrollTitle"></LoadScroll>
       </div>
-    </Scroll>
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import HeaderPub from 'header/header-pub/header-pub'
-import Scroll from 'base/scroll/scroll'
 import LoadFull from 'base/load-full/load-full'
 import LoadScroll from 'base/load-scroll/load-scroll'
 import {getTicket, getTicketClass} from '@/api/api'
@@ -52,7 +55,6 @@ import {swiper, swiperSlide} from 'vue-awesome-swiper'
 export default {
   components: {
     HeaderPub,
-    Scroll,
     LoadFull,
     LoadScroll,
     swiper,
@@ -63,12 +65,11 @@ export default {
       currentShow: true,
       ticket: [],
       ticketClass: [],
-      pullup: true,
       ifShowLoadScroll: true,
       ifShowLoad: true, // 判断是否需要Loadscroll圆圈图标
       loadScrollTitle: '数据加载中...',
-      page: 2, // 底部上拉加载页数
-      hasMore: true, // 是否还需要上拉加载
+      page: 1, // 底部上拉加载页数
+      hasMore: false, // 是否还需要上拉加载
       swiperOption: { // swiper 配置参数
         slidesPerView: 'auto',
         freeMode: true
@@ -78,6 +79,7 @@ export default {
   },
   created () {
     this._getAllData()
+    this.loadMore() // 手动触发第一次执行
   },
   methods: {
     addUrl (urlText, itemId) {
@@ -86,21 +88,6 @@ export default {
     _getAllData () {
       let _this = this
       let promise1 = new Promise((resolve, reject) => {
-        getTicket(1, this.curClassId).then((res) => {
-          if (res.code === ERR_OK) {
-            _this.ticket = res.data
-            if (res.data.length < 10) {
-              _this.loadScrollTitle = '没有更多数据了'
-              _this.ifShowLoad = false
-              _this.hasMore = false
-            }
-            resolve(res.data)
-          } else {
-            resolve(res)
-          }
-        })
-      })
-      let promise2 = new Promise((resolve, reject) => {
         getTicketClass().then((res) => {
           if (res.code === ERR_OK) {
             _this.ticketClass = res.data
@@ -110,10 +97,9 @@ export default {
           }
         })
       })
-      let promiseAll = Promise.all([promise1, promise2])
+      let promiseAll = Promise.all([promise1])
       promiseAll.then(() => {
         setTimeout(() => {
-          this.$refs.ticketBox.refresh()
           this.currentShow = false
         }, 20)
       })
@@ -121,16 +107,10 @@ export default {
     chooseTicket (id) {
       if (this.curClassId === id) return
       this.curClassId = id
-      this.loading.open({
-        text: '加载中...',
-        spinnerType: 'fading-circle'
-      })
       this.ticket = []
-      this.$refs.ticketBox.scrollTo(0, 0)
       this.ifShowLoad = true // 判断是否需要Loadscroll圆圈图标
       this.loadScrollTitle = '数据加载中...'
       this.page = 2
-      this.hasMore = true
       let _this = this
       getTicket(1, this.curClassId).then((res) => {
         if (res.code === ERR_OK) {
@@ -138,38 +118,36 @@ export default {
           if (res.data.length < 10) {
             _this.loadScrollTitle = '没有更多数据了'
             _this.ifShowLoad = false
-            _this.hasMore = false
+            setTimeout(() => { // 不加会自动检查再次调用
+              this.hasMore = true
+            }, 20)
+          } else {
+            setTimeout(() => { // 不加会自动检查再次调用
+              this.hasMore = false
+            }, 20)
           }
         }
-        setTimeout(() => {
-          this.$refs.ticketBox.refresh()
-          _this.loading.close()
-        }, 200)
       })
     },
     loadMore () { // 数据上拉加载
-      if (!this.hasMore) return
-      this.hasMore = false
+      this.hasMore = true
       getTicket(this.page, this.curClassId).then((res) => {
         if (res.code === ERR_OK) {
           setTimeout(() => {
+            this.ticket = this.ticket.concat(res.data)
             if (res.data.length < 10) {
               this.loadScrollTitle = '没有更多数据了'
               this.ifShowLoad = false
             } else {
-              this.hasMore = true
+              setTimeout(() => { // 不加会自动检查再次调用
+                this.hasMore = false
+              }, 20)
+              this.page++
             }
-            this.ticket = this.ticket.concat(res.data)
-            this.page++
           }, 500)
         }
       })
     }
-  },
-  activated () {
-    setTimeout(() => {
-      this.$refs.ticketBox.refresh()
-    }, 20)
   }
 }
 </script>
@@ -183,36 +161,39 @@ export default {
     box-orient: vertical
     flex-direction: column
     position: relative
-    .class-banner
-      width: 100%
+    .class-banner-box
       height: 0.86rem
-      line-height: 0.86rem
-      background: #fff
-      position: relative
-      &.opacity
-        opacity: 0
-      &:before
-        line-scale()
-        bottom: 0
-        top: auto
-      .cl-box
-        width: auto
-        a
-          display: block
-          padding: 0 0.4rem
-          font-weight: 400
-          font-size: $font-size-medium
-          color: $color-background-999
-        &.act
+      .class-banner
+        position: fixed
+        top: 0.86rem
+        width: 100%
+        line-height: 0.86rem
+        background: #fff
+        z-index: 1000
+        &.opacity
+          opacity: 0
+        &:before
+          line-scale()
+          bottom: 0
+          top: auto
+        .cl-box
+          width: auto
           a
-            color: $color-highlight-background
-          &:before
-            line-scale()
-            height: 2px
-            background: red
-            bottom: 0
-            top: auto
-            transform-origin: center bottom
+            display: block
+            padding: 0 0.4rem
+            font-weight: 400
+            font-size: $font-size-medium
+            color: $color-background-999
+          &.act
+            a
+              color: $color-highlight-background
+            &:before
+              line-scale()
+              height: 2px
+              background: red
+              bottom: 0
+              top: auto
+              transform-origin: center bottom
     .ticket
       flex: 1
       overflow: hidden

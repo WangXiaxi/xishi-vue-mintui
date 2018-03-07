@@ -5,10 +5,12 @@
       <router-link class="input" tag="div" to="/">
         <i class="mintui mintui-search">
         </i>
-        搜索
+        <span>搜索</span>
       </router-link>
     </div>
-    <scroll class="inner-box" :class="{'opacity':currentShow}" :data="strategyList" :pullup="pullup" @scrollToEnd="loadMore" ref="homeBox">
+    <div class="inner-box" :class="{'opacity':currentShow}" v-infinite-scroll="loadMore"
+                                                            infinite-scroll-disabled="hasMore"
+                                                            infinite-scroll-distance="10">
       <div>
         <!-- 轮播展示 -->
         <div class="banner-swiper">
@@ -109,14 +111,13 @@
           <LoadScroll v-show="ifShowLoadScroll" :ifShowLoad="ifShowLoad" :title="loadScrollTitle"></LoadScroll>
         </div>
       </div>
-    </scroll>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import {getBanner, getHomeNews, getHomeTicket, getHomeScenicArea, getHomeStrategy} from '@/api/api'
 import {ERR_OK} from '@/api/config'
-import Scroll from 'base/scroll/scroll'
 import LoadScroll from 'base/load-scroll/load-scroll'
 import LoadFull from 'base/load-full/load-full'
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
@@ -125,7 +126,6 @@ export default {
   components: {
     swiper,
     swiperSlide,
-    Scroll,
     LoadScroll,
     LoadFull
   },
@@ -154,14 +154,15 @@ export default {
       ifShowLoadScroll: true,
       ifShowLoad: true, // 判断是否需要Loadscroll圆圈图标
       loadScrollTitle: '数据加载中...',
-      page: 2, // 底部上拉加载页数
-      hasMore: true // 是否还需要上拉加载
+      page: 1, // 底部上拉加载页数
+      hasMore: false // 是否还需要上拉加载
     }
   },
   computed: {
   },
   created () {
     this._getAllData()
+    this.loadMore()
   },
   methods: {
     addUrl (urlText, itemId) {
@@ -207,23 +208,9 @@ export default {
           }
         })
       })
-      let promise5 = new Promise((resolve, reject) => {
-        getHomeStrategy(1).then((res) => {
-          if (res.code === ERR_OK) {
-            _this.strategyList = res.data
-            if (res.data.length < 5) {
-              this.loadScrollTitle = '没有更多数据了'
-              this.ifShowLoad = false
-              this.hasMore = false
-            }
-            resolve(res.data)
-          }
-        })
-      })
-      let promiseAll = Promise.all([promise1, promise2, promise3, promise4, promise5])
+      let promiseAll = Promise.all([promise1, promise2, promise3, promise4])
       promiseAll.then(() => {
         setTimeout(() => {
-          this.$refs.homeBox.refresh()
           this.currentShow = false
         }, 20)
       })
@@ -237,19 +224,20 @@ export default {
       }, 500)
     },
     loadMore () { // 数据上拉加载
-      if (!this.hasMore) return
-      this.hasMore = false
+      this.hasMore = true
       getHomeStrategy(this.page).then((res) => {
         if (res.code === ERR_OK) {
           setTimeout(() => {
+            this.strategyList = this.strategyList.concat(res.data)
             if (res.data.length < 10) {
               this.loadScrollTitle = '没有更多数据了'
               this.ifShowLoad = false
             } else {
-              this.hasMore = true
+              this.page++
+              setTimeout(() => { // 不加会自动检查再次调用
+                this.hasMore = false
+              }, 20)
             }
-            this.strategyList = this.strategyList.concat(res.data)
-            this.page++
           }, 500)
         }
       })
@@ -264,9 +252,6 @@ export default {
     if (this.$refs.mySwiper) {
       this.$refs.mySwiper.swiper.startAutoplay()
     }
-    setTimeout(() => {
-      this.$refs.homeBox.refresh()
-    }, 20)
   }
 }
 </script>
@@ -296,16 +281,19 @@ export default {
       .input
         width: 100%
         height: 100%
-        line-height: 0.68rem
+        line-height: 1
         background-color: hsla(0, 0%, 100%, .8)
         border-radius: 0.32rem
         font-size: .28rem
-        padding-left: 0.2rem
+        padding: 0.2rem
         color: $color-background-999
         vertical-align: middle
         .mintui
           vertical-align: middle
           font-size: 0.32rem
+        span
+          vertical-align: middle
+          font-size: .28rem
     .inner-box
       position: relative
       flex: 1

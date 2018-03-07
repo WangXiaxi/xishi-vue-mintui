@@ -1,13 +1,13 @@
 <template>
-  <div id="app" v-cloak :class="{paddbottom:FooterNavShow === true}">
+  <div id="app" v-cloak>
     <div class="inner-box">
+      <transition name="slide">
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
+      </transition>
       <transition name="slide">
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive"></router-view>
         </keep-alive>
-      </transition>
-      <transition name="slide">
-        <router-view v-if="!$route.meta.keepAlive"></router-view>
       </transition>
     </div>
     <FooterNav v-show="FooterNavShow"></FooterNav>
@@ -29,26 +29,19 @@ export default {
   created () {
   },
   mounted () {
+  },
+  methods: {
   }
 }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   #app
-    width: 100%
-    height: 100%
     position: relative
     &.paddbottom
-      padding-bottom:1.04rem
-    .inner-box
-      width: 100%
-      height: 100%
-      overflow: hidden
-      .abx
-        width: 100%
-        height:100%
+      padding-bottom: 1.04rem
   .slide-enter-active
-    transition: all 0.3s
+    transition: all 0.5s ease
   .slide-enter,.slide-leave-to
     opacity: 0
   [v-cloak]

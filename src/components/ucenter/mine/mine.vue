@@ -1,5 +1,5 @@
 <template>
-  <Scroll class="mine-box" ref="mineBox">
+  <div class="mine-box">
     <div>
       <div class="mine-header">
         <router-link tag="div" to="/personal-pro" class="top">
@@ -82,18 +82,11 @@
         <p>提供技术支持</p>
       </div>
     </div>
-  </Scroll>
+  </div>
 </template>
 <script type="text/ecmascript-6">
-import Scroll from 'base/scroll/scroll'
 export default {
   components: {
-    Scroll
-  },
-  activated () {
-    setTimeout(() => {
-      this.$refs.mineBox.refresh()
-    }, 20)
   }
 }
 </script>
@@ -101,10 +94,7 @@ export default {
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
   .mine-box
-    width: 100%
-    height: 100%
     position: relative
-    overflow: hidden
     .mine-header
       height: 3.8rem
       background: #FB5350 #F95352
