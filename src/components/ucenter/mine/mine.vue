@@ -1,86 +1,84 @@
 <template>
-  <div class="mine-box">
-    <div>
-      <div class="mine-header">
-        <router-link tag="div" to="/personal-pro" class="top">
-          <div class="header-img">
-            <img src="./header.png" onerror="./header.png">
+  <div class="mine-box child-view">
+    <div class="mine-header">
+      <router-link tag="div" to="/personal-pro" class="top">
+        <div class="header-img">
+          <img src="./header.png" onerror="./header.png">
+        </div>
+        <div class="header-inner">
+          <div class="header-inner-box">
+            <h2 class="name"><img src="./sex-men.png"><span>15058559592用户名</span></h2>
+            <p class="home-location">浙江省 杭州市 萧山区东方文化园</p>
           </div>
-          <div class="header-inner">
-            <div class="header-inner-box">
-              <h2 class="name"><img src="./sex-men.png"><span>15058559592用户名</span></h2>
-              <p class="home-location">浙江省 杭州市 萧山区东方文化园</p>
-            </div>
-          </div>
-          <div class="more">
-          </div>
-        </router-link>
-        <div class="bot">
-          <div class="item">
-            <span class="ico-bg point">
-              积分 5000
-            </span>
-          </div>
-          <div class="split"></div>
-          <div class="item">
-            <span class="ico-bg fav">
-              我的收藏
-            </span>
-          </div>
+        </div>
+        <div class="more">
+        </div>
+      </router-link>
+      <div class="bot">
+        <div class="item">
+          <span class="ico-bg point">
+            积分 5000
+          </span>
+        </div>
+        <div class="split"></div>
+        <div class="item">
+          <span class="ico-bg fav">
+            我的收藏
+          </span>
         </div>
       </div>
-      <div class="mine-order">
-        <div class="tit-box">
-          <span class="tit">门票订单</span>
-          <span class="more"><span>查看全部</span></span>
-        </div>
-        <div class="order-nav">
-          <ul>
-            <li>
-              <i class="o-n-1"></i>
-              待付款
-            </li>
-            <li>
-              <i class="o-n-2"></i>
-              待出票
-            </li>
-            <li>
-              <i class="o-n-3"></i>
-              待使用
-            </li>
-            <li>
-              <i class="o-n-4"></i>
-              待评价
-            </li>
-          </ul>
-        </div>
+    </div>
+    <div class="mine-order">
+      <div class="tit-box">
+        <span class="tit">门票订单</span>
+        <span class="more"><span>查看全部</span></span>
       </div>
-      <div class="mine-more">
+      <div class="order-nav">
         <ul>
           <li>
-            <span class="i-fo">我的足迹</span>
+            <i class="o-n-1"></i>
+            待付款
           </li>
           <li>
-            <span class="i-location">地址管理</span>
-          </li>
-          <router-link tag="li" to="/personal-pro">
-            <span class="i-preson">资料修改</span>
-          </router-link>
-          <li>
-            <span class="i-passw">修改密码</span>
+            <i class="o-n-2"></i>
+            待出票
           </li>
           <li>
-            <span class="i-reg">意见反馈</span>
+            <i class="o-n-3"></i>
+            待使用
+          </li>
+          <li>
+            <i class="o-n-4"></i>
+            待评价
           </li>
         </ul>
       </div>
-      <div class="mine-out">
-        退出登录
-      </div>
-      <div class="mine-zc">
-        <p>浙江依杭网络科技有限公司</p>
-        <p>提供技术支持</p>
-      </div>
+    </div>
+    <div class="mine-more">
+      <ul>
+        <li>
+          <span class="i-fo">我的足迹</span>
+        </li>
+        <li>
+          <span class="i-location">地址管理</span>
+        </li>
+        <router-link tag="li" to="/personal-pro">
+          <span class="i-preson">资料修改</span>
+        </router-link>
+        <li>
+          <span class="i-passw">修改密码</span>
+        </li>
+        <li>
+          <span class="i-reg">意见反馈</span>
+        </li>
+      </ul>
+    </div>
+    <div class="mine-out">
+      退出登录
+    </div>
+    <div class="mine-zc">
+      <p>浙江依杭网络科技有限公司</p>
+      <p>提供技术支持</p>
     </div>
   </div>
 </template>
@@ -94,7 +92,6 @@ export default {
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
   .mine-box
-    position: relative
     .mine-header
       height: 3.8rem
       background: #FB5350 #F95352

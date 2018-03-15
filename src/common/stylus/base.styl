@@ -1,5 +1,7 @@
 @import "variable.styl"
-
+html
+  height: 100%
+  overflow-x: hidden
 body, html
   line-height: 1
   font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback'
@@ -19,3 +21,8 @@ body, html
   min-height: 0.96rem !important
 input
   -webkit-user-modify: read-write-plaintext-only
+.child-view
+  position: absolute
+  padding-bottom: 1.04rem
+  width: 100%
+  transition: all .8s cubic-bezier(.55, 0, .1, 1)

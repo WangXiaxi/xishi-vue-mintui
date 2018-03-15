@@ -1,6 +1,6 @@
 <template>
-  <div class="personal-pro">
-    <HeaderPub headerTitle="资料修改"></HeaderPub>
+  <div class="personal-pro child-view">
+    <HeaderPub headerTitle="资料修改" @clickEvent="keepInfo" :showKeepInfo="true"></HeaderPub>
     <div class="personal-pro-box">
       <div class="page-field">
         <div class="page-part">
@@ -14,9 +14,9 @@
             </div>
           </a>
           <mt-field label="昵称" placeholder="请输入您的昵称" v-model="username"></mt-field>
-          <mt-field label="email" placeholder="Input email" type="email" v-model="email"></mt-field>
-          <mt-field label="phone" placeholder="Input tel" type="tel" v-model="phone"></mt-field>
-          <mt-field label="birthday" placeholder="birthday" type="date" v-model="birthday"></mt-field>
+          <mt-field label="邮箱" placeholder="请输入您的邮箱" type="email" v-model="email"></mt-field>
+          <mt-field label="手机号" placeholder="请输入您的手机号" type="tel" v-model="phone"></mt-field>
+          <mt-field label="生日" placeholder="请输入您的生日" type="date" v-model="birthday"></mt-field>
         </div>
       </div>
     </div>
@@ -42,7 +42,9 @@ export default {
     console.log(wx)
   },
   methods: {
-
+    keepInfo () {
+      console.log(123)
+    }
   }
 }
 </script>
@@ -53,7 +55,6 @@ export default {
     display: flex
     box-orient: vertical
     flex-direction: column
-    position: relative
     .personal-pro-box
       flex: 1
       -webkit-overflow-scrolling: touch

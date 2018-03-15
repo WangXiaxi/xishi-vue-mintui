@@ -1,5 +1,5 @@
 <template>
-  <div class="ticket-box">
+  <div class="ticket-box child-view">
     <LoadFull v-if="currentShow"></LoadFull>
     <HeaderPub headerTitle="门票"></HeaderPub>
     <div class="class-banner-box">
@@ -17,30 +17,28 @@
     <div class="ticket" :class="{'opacity':currentShow}" v-infinite-scroll="loadMore"
                                                         infinite-scroll-disabled="hasMore"
                                                         infinite-scroll-distance="10">
-      <div>
-        <ul class="ticket-list">
-          <router-link tag="li" :to="addUrl('/ticket-detail', item.id)" v-for="(item, index) in ticket" :key="index">
-            <div class="img-box">
-              <img v-lazy="item.img">
+      <transition-group tag="ul" class="ticket-list" name="opacity">
+        <router-link tag="li" :to="addUrl('/ticket-detail', item.id)" v-for="(item, index) in ticket" :key="index">
+          <div class="img-box">
+            <img v-lazy="item.img">
+          </div>
+          <div class="content-box">
+            <h2 class="tit">
+              <span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)">
+                <i>惠</i>
+              </span>
+              <span class="t">{{item.name}}</span>
+            </h2>
+            <p class="tips-ts"><span  v-for="(item, index) in item.conditions" :key="index">{{item}}</span></p>
+            <div class="price-box">
+              <span class="price"><i>￥</i>{{item.sell_price}}</span>
+              <span class="old-price" v-if="Number(item.sell_price)<Number(item.market_price)"><i>￥</i>{{item.market_price}}</span>
             </div>
-            <div class="content-box">
-              <h2 class="tit">
-                <span class="tips" v-if="Number(item.sell_price)<Number(item.market_price)">
-                  <i>惠</i>
-                </span>
-                <span class="t">{{item.name}}</span>
-              </h2>
-              <p class="tips-ts"><span  v-for="(item, index) in item.conditions" :key="index">{{item}}</span></p>
-              <div class="price-box">
-                <span class="price"><i>￥</i>{{item.sell_price}}</span>
-                <span class="old-price" v-if="Number(item.sell_price)<Number(item.market_price)"><i>￥</i>{{item.market_price}}</span>
-              </div>
-              <div class="shopping"></div>
-            </div>
-          </router-link>
-        </ul>
-        <LoadScroll v-show="ifShowLoadScroll" :ifShowLoad="ifShowLoad" :title="loadScrollTitle"></LoadScroll>
-      </div>
+            <div class="shopping"></div>
+          </div>
+        </router-link>
+      </transition-group>
+      <LoadScroll v-show="ifShowLoadScroll" :ifShowLoad="ifShowLoad" :title="loadScrollTitle"></LoadScroll>
     </div>
   </div>
 </template>
@@ -154,19 +152,22 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
+  .opacity-enter-active
+    transition: all 0.3s
+  .opacity-enter,.opacity-leave-to
+    opacity: 0
   .ticket-box
     width: 100%
-    height: 100%
     display: flex
     box-orient: vertical
     flex-direction: column
-    position: relative
     .class-banner-box
       height: 0.86rem
       .class-banner
         position: fixed
         top: 0.86rem
         width: 100%
+        max-width: 640px
         line-height: 0.86rem
         background: #fff
         z-index: 1000

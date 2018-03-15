@@ -43,8 +43,6 @@ export default {
       display: flex
       box-orient: horizontal
       flex-direction: row
-      &:after
-        line-scale()
       li
         position: relative
         -webkit-box-flex: 1

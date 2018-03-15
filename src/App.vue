@@ -1,15 +1,13 @@
 <template>
   <div id="app" v-cloak>
-    <div class="inner-box">
-      <transition name="slide">
-        <router-view v-if="!$route.meta.keepAlive"></router-view>
-      </transition>
-      <transition name="slide">
-        <keep-alive>
-          <router-view v-if="$route.meta.keepAlive"></router-view>
-        </keep-alive>
-      </transition>
-    </div>
+    <transition name="slide">
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
+    </transition>
+    <transition name="slide">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
     <FooterNav v-show="FooterNavShow"></FooterNav>
   </div>
 </template>
@@ -31,6 +29,12 @@ export default {
   mounted () {
   },
   methods: {
+  },
+  watch: {
+    '$route': function () {
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    }
   }
 }
 </script>
@@ -40,10 +44,12 @@ export default {
     position: relative
     &.paddbottom
       padding-bottom: 1.04rem
-  .slide-enter-active
-    transition: all 0.5s ease
-  .slide-enter,.slide-leave-to
-    opacity: 0
+  .slide-enter
+    opacity:0
+    transform:translate(50px)
+  .slide-leave-to
+    opacity:0
+    transform:translate(-50px)
   [v-cloak]
     opacity: 0
 </style>

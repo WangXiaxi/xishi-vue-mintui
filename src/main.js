@@ -38,8 +38,6 @@ router.beforeEach((to, from, next) => {
   next()
 })
 router.afterEach((to, from) => {
-  document.body.scrollTop = 0 // 页面跳转之后设置scrolltop = 0
-  document.documentElement.scrollTop = 0 // 页面跳转之后设置scrolltop = 0
   // 路由跳转结束进度结束
   NProgress.done()
 })

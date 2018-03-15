@@ -1,7 +1,7 @@
 <template>
   <transition name="opacity">
     <div class="mint-indicator" @touchstart.stop.prevent @touchmove.stop.prevent @touchend.stop.prevent>
-      <div class="mint-indicator-wrapper" style="padding: 20px;">
+      <div class="mint-indicator-wrapper" :style='TopHeight' style="padding: 20px;">
         <span class="mint-indicator-spin">
           <div class="mint-spinner-fading-circle circle-color-20" style="width: 32px; height: 32px;">
             <div class="mint-spinner-fading-circle-circle is-circle2"></div>
@@ -29,6 +29,11 @@
 </template>
 <script type="text/ecmascript-6">
 export default {
+  computed: {
+    TopHeight () {
+      return `top: ${document.documentElement.clientHeight / 2}px`
+    }
+  }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

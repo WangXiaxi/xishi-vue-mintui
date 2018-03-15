@@ -5,6 +5,7 @@
       <div class="header-content">
         {{headerTitle}}
       </div>
+      <a v-if="showKeepInfo" class="keep-info" @click="clickEvent">{{clickInfo}}</a>
     </div>
   </div>
 </template>
@@ -18,6 +19,14 @@ export default {
     'back': {
       type: String,
       default: 'no'
+    },
+    'clickInfo': {
+      type: String,
+      default: '保存'
+    },
+    'showKeepInfo': {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -27,6 +36,9 @@ export default {
       } else {
         this.$router.push(this.back)
       }
+    },
+    clickEvent () {
+      this.$emit('clickEvent')
     }
   }
 }
@@ -41,6 +53,7 @@ export default {
       background: #fff
       position: fixed
       width: 100%
+      max-width: 640px
       top: 0
       z-index: 1000;
       &:before
@@ -58,6 +71,16 @@ export default {
         display: flex
         justify-content: center
         align-items: center
+      .keep-info
+        position: absolute
+        right: 0.2rem
+        top: 0.08rem
+        z-index: 100
+        line-height: 0.7rem
+        padding: 0 0.24rem
+        font-size: $font-size-medium-x1
+        background: #f0f0f0
+        border-radius: 5px
       .header-content
         text-align: center
         line-height: 0.86rem

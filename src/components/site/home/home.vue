@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home child-view">
     <LoadFull v-if="currentShow"></LoadFull>
     <div class="header">
       <router-link class="input" tag="div" to="/">
@@ -41,19 +41,6 @@
             集团简介
           </router-link>
         </div>
-        <!-- 新闻推荐 -->
-        <div class="home-news" v-if="news.length>0">
-          <div class="title">
-            <img src="./gongGao.png">
-            <span>最近新闻</span>
-          </div>
-          <div class="inner">
-            <ul class="sw-inner" :class="{'anim': animateNews}">
-              <router-link tag="li" v-for="(item, index) in news" :key="index" :to="addUrl('/news',item.id)">{{item.title}}</router-link>
-            </ul>
-          </div>
-          <router-link tag="div" to="/" class="more">更多</router-link>
-        </div>
         <!-- 门票选择 -->
         <div class="pub-floor" v-if="ticket.length>0">
           <h2>门票·选择</h2>
@@ -94,20 +81,18 @@
         <!-- 玩法攻略 -->
         <div class="home-strategy" v-if="strategyList.length>0">
           <h2 class="big-tit">游玩·攻略</h2>
-          <ul class="list">
-            <transition-group name="opacity">
-              <router-link tag="li" to="/" v-for="(item, index) in strategyList" :key="index">
-                <div class="img-box">
-                  <img v-lazy="item.img">
-                </div>
-                <div class="text-box">
-                  <h2>{{item.name}}</h2>
-                  <p class="des">{{item.des}}</p>
-                  <span class="time">{{item.time}}</span>
-                </div>
-              </router-link>
-            </transition-group>
-          </ul>
+          <transition-group tag="ul" class="list" name="opacity">
+            <router-link tag="li" to="/" v-for="(item, index) in strategyList" :key="index">
+              <div class="img-box">
+                <img v-lazy="item.img">
+              </div>
+              <div class="text-box">
+                <h2>{{item.name}}</h2>
+                <p class="des">{{item.des}}</p>
+                <span class="time">{{item.time}}</span>
+              </div>
+            </router-link>
+          </transition-group>
           <LoadScroll v-show="ifShowLoadScroll" :ifShowLoad="ifShowLoad" :title="loadScrollTitle"></LoadScroll>
         </div>
       </div>
@@ -150,7 +135,6 @@ export default {
         autoHeight: true,
         autoplayDisableOnInteraction: false
       },
-      pullup: true,
       ifShowLoadScroll: true,
       ifShowLoad: true, // 判断是否需要Loadscroll圆圈图标
       loadScrollTitle: '数据加载中...',
@@ -265,11 +249,9 @@ export default {
     opacity: 0
   .home
     width: 100%
-    height: 100%
     display: flex
     box-orient: vertical
     flex-direction: column
-    position: relative
     .header
       position: fixed
       top: 0
