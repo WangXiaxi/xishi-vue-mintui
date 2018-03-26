@@ -11,6 +11,11 @@ module.exports = {
     sourceMap: sourceMapEnabled,
     extract: isProduction
   }),
+  postcss: [
+    require('autoprefixer')({
+      browsers: ['last 20 versions']
+    })
+  ],
   cssSourceMap: sourceMapEnabled,
   cacheBusting: config.dev.cacheBusting,
   transformToRequire: {

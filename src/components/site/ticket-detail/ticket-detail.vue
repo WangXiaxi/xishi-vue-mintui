@@ -4,15 +4,9 @@
       <div class="back"></div>
     </div>
     <div class="swiper-list">
-      <swiper :options="swiperOption" ref="mySwiper">
+      <swiper class="my-swiper" :options="swiperOption" ref="mySwiper">
         <swiper-slide>
-          <img src="http://gw.alicdn.com/imgextra/i3/45216016/TB2Ul_Vtl0kpuFjSsppXXcGTXXa_!!45216016.png_760x760.jpg_.webp" />
-        </swiper-slide>
-        <swiper-slide>
-          <img src="http://gw.alicdn.com/imgextra/i4/45216016/TB2vWu1tmBjpuFjSsplXXa5MVXa_!!45216016.jpg_760x760q50s150.jpg_.webp" />
-        </swiper-slide>
-        <swiper-slide>
-          <img src="http://gw.alicdn.com/imgextra/i4/45216016/TB2gNSTtmhlpuFjSspkXXa1ApXa_!!45216016.jpg_760x760q50s150.jpg_.webp" />
+          <img src="http://p1.meituan.net/hotel/e25121a2fb8eb0bc0504c14643c615c2746530.png" />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
@@ -62,4 +56,13 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
+  
+  .titket-detail
+    .swiper-list
+      width: 100%
+      .my-swiper
+        width: 100%
+        .swiper-slide
+          img
+            width: 100%
 </style>

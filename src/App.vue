@@ -1,13 +1,9 @@
 <template>
   <div id="app" v-cloak>
-    <transition name="slide">
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
-    </transition>
-    <transition name="slide">
-      <keep-alive>
-        <router-view v-if="$route.meta.keepAlive"></router-view>
-      </keep-alive>
-    </transition>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
     <FooterNav v-show="FooterNavShow"></FooterNav>
   </div>
 </template>
@@ -44,12 +40,6 @@ export default {
     position: relative
     &.paddbottom
       padding-bottom: 1.04rem
-  .slide-enter
-    opacity:0
-    transform:translate(50px)
-  .slide-leave-to
-    opacity:0
-    transform:translate(-50px)
   [v-cloak]
     opacity: 0
 </style>
